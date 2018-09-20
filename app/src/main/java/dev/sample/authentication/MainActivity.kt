@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(FRAGMENT_CONTAINER, LoginFragment.newInstance("tmp", "tmp"))
+                .replace(FRAGMENT_CONTAINER, ContentFragment.newInstance("tmp", "tmp"))
                 .commit()
     }
 }
