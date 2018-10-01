@@ -1,13 +1,10 @@
 package dev.sample.authentication
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import dev.sample.authentication.model.User
 
-class ContentViewModel: ViewModel() {
-    val userData = MutableLiveData<User>()
+class ContentViewModel(private val userId: String?) : ViewModel() {
+    private var userData: User = User()
 
-    fun test() {
-        userData.observeForever {  }
-    }
+    fun getUser() : User = userData
 }
