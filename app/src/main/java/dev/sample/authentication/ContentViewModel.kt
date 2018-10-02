@@ -1,20 +1,17 @@
 package dev.sample.authentication
 
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseUser
 import dev.sample.authentication.model.User
 
 class ContentViewModel : ViewModel() {
-    private lateinit var userId: String
-
     // TODO this must became an observable
-    private lateinit var userData: User
+    private var userData: User = User()
 
-    fun init(userIdParam: String?) {
-        userId = userIdParam ?: User.emptyUserId()
-        initUser()
+    fun init(firebaseUser: FirebaseUser?) {
+        userData = User(firebaseUser?.uid ?: User.emptyUserId()
+                , firebaseUser?.displayName ?: User.emptyUserName())
     }
-
-    private fun initUser() : User = User(userId)
 
     fun getUser() : User = userData
 }
