@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AuthenticationSample</string>
 
-    <string name="hello_word">Hi</string>
+    <string name="hello_word">Welcome</string>
     <string name="username_unknown">Unknown</string>
 
     <string name="goto_login">Login</string>

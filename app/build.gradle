@@ -27,9 +27,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Architecture Components
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
-    //implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
-    //implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
 
     // firebase
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCoreVersion"
