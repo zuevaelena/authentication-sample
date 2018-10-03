@@ -28,11 +28,7 @@ class ContentViewModel : ViewModel() {
     fun getSignInIntent() : Intent {
         val authenticationProviders = listOf(
                 AuthUI.IdpConfig.GoogleBuilder().build() // Google auth
-
-                // TODO implement bellow authentication ways, consider if need to add more
-                //, AuthUI.IdpConfig.EmailBuilder().build()
-                //, AuthUI.IdpConfig.FacebookBuilder().build()
-                //, AuthUI.IdpConfig.TwitterBuilder().build()
+                , AuthUI.IdpConfig.EmailBuilder().build() // auth by email
         )
 
         return AuthUI.getInstance()

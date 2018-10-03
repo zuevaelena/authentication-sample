@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_content.do_logout
 import kotlinx.android.synthetic.main.fragment_content.goto_login
-import kotlinx.android.synthetic.main.fragment_content.username
+import kotlinx.android.synthetic.main.fragment_content.user_name
 import dev.sample.authentication.model.User
+import kotlinx.android.synthetic.main.fragment_content.user_photo
 
 class ContentFragment : Fragment() {
     private lateinit var viewModel: ContentViewModel
@@ -42,7 +45,7 @@ class ContentFragment : Fragment() {
         when(requestCode) {
             SIGN_IN_REQUEST -> {
                 if(resultCode != RESULT_OK) {
-                    // TODO handle an error?
+                    // TODO handle an error
                 }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
@@ -55,10 +58,18 @@ class ContentFragment : Fragment() {
     }
 
     private fun updateUi(user: User) {
-        username.text = user.name
+        user_name.text = user.name
 
         do_logout.visibility = if(user.isLoggedIn()) View.VISIBLE else View.GONE
         goto_login.visibility = if(user.isLoggedIn()) View.GONE else View.VISIBLE
+
+        Glide.with(this)
+                .setDefaultRequestOptions(RequestOptions().apply{
+                    placeholder(R.drawable.ic_account_circle)
+                    circleCrop()
+                })
+                .load(user.photoUrl)
+                .into(user_photo)
 
         if(user.isLoggedIn()) {
             do_logout.setOnClickListener { _ ->

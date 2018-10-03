@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="WelcomeMessage">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="UserCard"/>
+    <style name="UserCard.Name">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingBottom">@dimen/user_card_margin</item>
+    </style>
+
 </resources>
