@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">AuthenticationSample</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_word">Welcome</string>
+
+    <string name="goto_login">Login</string>
+    <string name="do_logout">Logout</string>
 </resources>
