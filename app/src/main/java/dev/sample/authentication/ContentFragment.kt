@@ -60,9 +60,6 @@ class ContentFragment : Fragment() {
     private fun updateUi(user: User) {
         user_name.text = user.name
 
-        do_logout.visibility = if(user.isLoggedIn()) View.VISIBLE else View.GONE
-        goto_login.visibility = if(user.isLoggedIn()) View.GONE else View.VISIBLE
-
         Glide.with(this)
                 .setDefaultRequestOptions(RequestOptions().apply{
                     placeholder(R.drawable.ic_account_circle)
@@ -70,6 +67,9 @@ class ContentFragment : Fragment() {
                 })
                 .load(user.photoUrl)
                 .into(user_photo)
+
+        do_logout.visibility = if(user.isLoggedIn()) View.VISIBLE else View.GONE
+        goto_login.visibility = if(user.isLoggedIn()) View.GONE else View.VISIBLE
 
         if(user.isLoggedIn()) {
             do_logout.setOnClickListener { _ ->
