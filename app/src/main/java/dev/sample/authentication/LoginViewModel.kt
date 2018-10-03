@@ -1,6 +1,6 @@
 package dev.sample.authentication
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 // TODO consider necessity of this class
 class LoginViewModel : ViewModel()
