@@ -42,11 +42,12 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCoreVersion"
     implementation "com.firebaseui:firebase-ui-auth:$rootProject.firebaseUiVersion"
 
-    // local unit tests
+    // unit tests
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     testImplementation "com.nhaarman:mockito-kotlin:$rootProject.mockitoKotlinVersion"
     testImplementation "org.hamcrest:hamcrest-library:$rootProject.hamcrestVersion"
+    testImplementation "androidx.arch.core:core-testing:$rootProject.lifecycleVersion"
 
     // instrumental tests
     //androidTestImplementation 'com.android.support.test:runner:1.0.2'
