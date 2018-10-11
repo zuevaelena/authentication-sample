@@ -1,6 +1,8 @@
 package dev.sample.authentication.ui.content
 
 import android.content.Intent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.SignInHandler
 import dev.sample.authentication.model.User
@@ -11,15 +13,11 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(private val signInHandler: SignInHandler) : ViewModel() {
 
-    lateinit var user: User
-
-    init {
-        // TODO get it properly
-        user = User.getAnonymous()
-    }
+    var userData: LiveData<User> = MutableLiveData<User>().apply { value = User.getAnonymous() }
+        private set
 
     fun getSignInIntent(): Intent {
-        if(isLoggedIn()) {
+        if (userData.value?.isLoggedIn() == true) {
             throw IllegalAccessException("Cannot get sign in intent while logged in")
         }
 
@@ -28,10 +26,6 @@ class ContentViewModel @Inject constructor(private val signInHandler: SignInHand
 
     fun logOut() {
         // TODO implement
-    }
-
-    private fun isLoggedIn(): Boolean {
-        return user.isLoggedIn()
     }
 
 }
