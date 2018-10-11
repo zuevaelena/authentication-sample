@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dev.sample.authentication.R
+import dev.sample.authentication.databinding.FragmentContentBinding
 import dev.sample.authentication.di.DaggerContentFragmentComponent
 import javax.inject.Inject
 
@@ -36,10 +38,14 @@ class ContentFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // view model is initialized here in order of potential data binding using
         viewModel = ViewModelProviders.of(this, viewModelFactory)[ContentViewModel::class.java]
 
-        return inflater.inflate(R.layout.fragment_content, container, false)
+        val binding: FragmentContentBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
+        binding.apply {
+            user = viewModel.user
+        }
+
+        return binding.root
     }
 
 }

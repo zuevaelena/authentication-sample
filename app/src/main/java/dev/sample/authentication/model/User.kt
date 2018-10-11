@@ -1,7 +1,5 @@
 package dev.sample.authentication.model
 
-import android.net.Uri
-
 data class User(val id: String, val name: String, var photoUrl: String) {
     companion object {
         private const val ANONYMOUS_USER_ID = "______no-user______"
