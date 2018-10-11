@@ -2,36 +2,33 @@ package dev.sample.authentication
 
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import dev.sample.authentication.fakedata.FakeSignInHandler
 import dev.sample.authentication.ui.content.ContentViewModel
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.MockitoAnnotations
+import java.lang.Exception
 
 /**
  * Unit tests for [ContentViewModel].
  */
-
 class ContentViewModelTest {
-    private val viewModel: ContentViewModel = ContentViewModel()
+
+    private val fakeSignInHandler: FakeSignInHandler = FakeSignInHandler()
+
+    private val viewModel: ContentViewModel = ContentViewModel(fakeSignInHandler)
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-
-    @Before
-    fun initMockData() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     fun whenNotLoggedIn_gettingLogInIntent_success() {
         // TODO configure not logged in state
 
-        assertThat(viewModel.getLogInIntent() is Intent, `is`(true))
+        assertThat(viewModel.getSignInIntent() is Intent, `is`(true))
     }
 
     @Test
@@ -45,8 +42,15 @@ class ContentViewModelTest {
     }
 
     @Test
-    fun whenLoggedIn_gettingLogInIntent_failure() {
-        // TODO implement the test
+    fun whenLoggedIn_gettingLogInIntent_exception() {
+        // TODO configure logged in state
+
+        try {
+            viewModel.getSignInIntent()
+
+        } catch (exception: Exception) {
+            assertThat(exception is IllegalAccessException, `is`(true))
+        }
     }
 
     @Test
