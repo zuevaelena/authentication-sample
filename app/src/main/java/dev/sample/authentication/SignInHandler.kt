@@ -7,7 +7,8 @@ interface SignInHandler {
     fun makeSignInIntent() : Intent
 }
 
-class FirebaseSignInHandler() : SignInHandler {
+class FirebaseSignInHandler : SignInHandler {
+    private val authUiInstance: AuthUI = AuthUI.getInstance()
 
     override fun makeSignInIntent() : Intent {
         val authenticationProviders = listOf(
@@ -15,7 +16,7 @@ class FirebaseSignInHandler() : SignInHandler {
                 , AuthUI.IdpConfig.EmailBuilder().build() // auth by email
         )
 
-        return AuthUI.getInstance()
+        return authUiInstance
                 .createSignInIntentBuilder()
                 .setAvailableProviders(authenticationProviders)
                 .build()

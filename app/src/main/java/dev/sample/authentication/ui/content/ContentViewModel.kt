@@ -2,23 +2,24 @@ package dev.sample.authentication.ui.content
 
 import android.content.Intent
 import androidx.lifecycle.ViewModel
-import dev.sample.authentication.FirebaseSignInHandler
+import dev.sample.authentication.SignInHandler
+import javax.inject.Inject
 
 /**
  * Data-handling business logic holder of Content screen.
  */
-class ContentViewModel: ViewModel() {
-    fun getLogInIntent(): Intent {
+class ContentViewModel @Inject constructor(private val signInHandler: SignInHandler) : ViewModel() {
+
+    fun getSignInIntent(): Intent {
         if(isLoggedIn()) {
-            throw IllegalAccessException("Cannot get log in intent while logged in")
+            throw IllegalAccessException("Cannot get sign in intent while logged in")
         }
 
-        // TODO inject this class by dagger, for it become mockable in tests
-        return FirebaseSignInHandler().makeSignInIntent()
+        return signInHandler.makeSignInIntent()
     }
 
-    // TODO do it in a proper way
     private fun isLoggedIn(): Boolean {
+        // TODO do it in a proper way
         return false
     }
 

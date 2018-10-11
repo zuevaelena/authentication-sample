@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -28,9 +28,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // architecture components
-    implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
-
     // ui
     implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
     implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
@@ -41,6 +38,18 @@ dependencies {
     // firebase
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCoreVersion"
     implementation "com.firebaseui:firebase-ui-auth:$rootProject.firebaseUiVersion"
+
+    // di core
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    // di android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    //implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion" // with no support library
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+
 
     // unit tests
     testImplementation "junit:junit:$rootProject.junitVersion"
@@ -53,3 +62,5 @@ dependencies {
     //androidTestImplementation 'com.android.support.test:runner:1.0.2'
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'
