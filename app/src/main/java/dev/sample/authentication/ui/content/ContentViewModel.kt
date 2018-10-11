@@ -3,12 +3,20 @@ package dev.sample.authentication.ui.content
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.SignInHandler
+import dev.sample.authentication.model.User
 import javax.inject.Inject
 
 /**
  * Data-handling business logic holder of Content screen.
  */
 class ContentViewModel @Inject constructor(private val signInHandler: SignInHandler) : ViewModel() {
+
+    lateinit var user: User
+
+    init {
+        // TODO get it properly
+        user = User.getAnonymous()
+    }
 
     fun getSignInIntent(): Intent {
         if(isLoggedIn()) {
@@ -18,9 +26,12 @@ class ContentViewModel @Inject constructor(private val signInHandler: SignInHand
         return signInHandler.makeSignInIntent()
     }
 
+    fun logOut() {
+        // TODO implement
+    }
+
     private fun isLoggedIn(): Boolean {
-        // TODO do it in a proper way
-        return false
+        return user.isLoggedIn()
     }
 
 }

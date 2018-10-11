@@ -3,6 +3,7 @@ package dev.sample.authentication
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.sample.authentication.fakedata.FakeSignInHandler
+import dev.sample.authentication.model.User
 import dev.sample.authentication.ui.content.ContentViewModel
 
 import org.hamcrest.MatcherAssert.assertThat
@@ -18,15 +19,17 @@ import java.lang.Exception
 class ContentViewModelTest {
 
     private val fakeSignInHandler: FakeSignInHandler = FakeSignInHandler()
-
     private val viewModel: ContentViewModel = ContentViewModel(fakeSignInHandler)
+
+    private val loggedInUser: User = User("testId", "testName", "")
+    private val loggedOutUser: User = User.getAnonymous()
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
     @Test
     fun whenNotLoggedIn_gettingLogInIntent_success() {
-        // TODO configure not logged in state
+        viewModel.user = loggedOutUser
 
         assertThat(viewModel.getSignInIntent() is Intent, `is`(true))
     }
@@ -43,7 +46,7 @@ class ContentViewModelTest {
 
     @Test
     fun whenLoggedIn_gettingLogInIntent_exception() {
-        // TODO configure logged in state
+        viewModel.user = loggedInUser
 
         try {
             viewModel.getSignInIntent()
