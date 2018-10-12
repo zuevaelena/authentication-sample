@@ -3,7 +3,7 @@ package dev.sample.authentication
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.sample.authentication.fakedata.FakeSignInHandler
-import dev.sample.authentication.ui.content.ContentViewModel
+import dev.sample.authentication.content.ui.ContentViewModel
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
