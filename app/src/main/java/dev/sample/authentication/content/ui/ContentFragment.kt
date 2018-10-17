@@ -15,7 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentContentBinding
 import dev.sample.authentication.content.di.DaggerContentFragmentComponent
-import dev.sample.authentication.model.User
+import dev.sample.authentication.entity.User
 import javax.inject.Inject
 
 
@@ -48,6 +48,8 @@ class ContentFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)[ContentViewModel::class.java]
+
+        // TODO reconsider this
         viewModel.userData.observe(this, userObserver)
 
         binding.apply {
@@ -55,9 +57,11 @@ class ContentFragment : Fragment() {
 
             user = viewModel.userData.value
 
+            // TODO do it properly
             Glide.with(this@ContentFragment)
                     .setDefaultRequestOptions(RequestOptions().apply{
-                        placeholder(R.drawable.ic_account_circle)
+                        //placeholder(R.drawable.ic_account_circle) // TODO show something while loading
+                        error(R.drawable.ic_account_circle)
                         circleCrop()
                     })
                     .load(viewModel.userData.value?.photoUrl)

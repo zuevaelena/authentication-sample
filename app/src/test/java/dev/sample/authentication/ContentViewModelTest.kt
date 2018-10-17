@@ -7,6 +7,8 @@ import dev.sample.authentication.content.ui.ContentViewModel
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.junit.Assert.fail
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
@@ -18,10 +20,15 @@ import java.lang.Exception
 class ContentViewModelTest {
 
     private val fakeSignInHandler: FakeSignInHandler = FakeSignInHandler()
-    private val viewModel: ContentViewModel = ContentViewModel(fakeSignInHandler)
+    private lateinit var viewModel: ContentViewModel
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+    @Before
+    fun initViewModel() {
+        viewModel = ContentViewModel(fakeSignInHandler)
+    }
 
     @Test
     fun whenLoggedOut_gettingLogInIntent_success() {
@@ -46,6 +53,7 @@ class ContentViewModelTest {
 
         try {
             viewModel.getSignInIntent()
+            fail("Exception expected when logged in and calling getSignInIntent()")
 
         } catch (exception: Exception) {
             assertThat(exception is IllegalAccessException, `is`(true))
