@@ -2,16 +2,21 @@ package dev.sample.authentication
 
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.sample.authentication.fakedata.FakeSignInHandler
+import dev.sample.authentication.fakeobjects.FakeSignInHandler
 import dev.sample.authentication.content.ui.ContentViewModel
+import dev.sample.authentication.content.usecase.FetchUser
+import dev.sample.authentication.content.usecase.ObserveAuthState
+import dev.sample.authentication.fakeobjects.FakeFetchSignedInUser
+import dev.sample.authentication.fakeobjects.FakeFetchSignedOutUser
 
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Assert.fail
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import org.mockito.Mock
+import org.mockito.Mockito.mock
 import java.lang.Exception
 
 /**
@@ -20,19 +25,21 @@ import java.lang.Exception
 class ContentViewModelTest {
 
     private val fakeSignInHandler: FakeSignInHandler = FakeSignInHandler()
+    private val fakeSignedInUser: FetchUser = FakeFetchSignedInUser()
+    private val fakeSignedOutUser: FetchUser = FakeFetchSignedOutUser()
+
     private lateinit var viewModel: ContentViewModel
+
+    @Mock
+    private var observeAuthState : ObserveAuthState = mock(ObserveAuthState::class.java)
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    @Before
-    fun initViewModel() {
-        viewModel = ContentViewModel(fakeSignInHandler)
-    }
 
     @Test
     fun whenLoggedOut_gettingLogInIntent_success() {
-        // TODO set logged out state
+        viewModel = ContentViewModel(fakeSignInHandler, fakeSignedOutUser, observeAuthState)
 
         assertThat(viewModel.getSignInIntent() is Intent, `is`(true))
     }
@@ -49,7 +56,7 @@ class ContentViewModelTest {
 
     @Test
     fun whenLoggedIn_gettingLogInIntent_exception() {
-        // TODO set logged in state
+        viewModel = ContentViewModel(fakeSignInHandler, fakeSignedInUser, observeAuthState)
 
         try {
             viewModel.getSignInIntent()
