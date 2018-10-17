@@ -1,5 +1,6 @@
 package dev.sample.authentication.content.di
 
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -17,5 +18,9 @@ class ContentDataModule {
     @Singleton
     @Provides
     fun provideFirebaseAuth() : FirebaseAuth = FirebaseAuth.getInstance()
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAuthUi() : AuthUI = AuthUI.getInstance()
 
 }

@@ -1,8 +1,11 @@
 package dev.sample.authentication.content.di
 
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
+import dev.sample.authentication.content.usecase.DoFirebaseLogOut
+import dev.sample.authentication.content.usecase.DoLogOut
 import dev.sample.authentication.content.usecase.MakeFirebaseSignIntent
 import dev.sample.authentication.content.usecase.MakeSignInIntent
 import dev.sample.authentication.content.usecase.FetchFirebaseUser
@@ -17,7 +20,11 @@ class ContentViewModelModule {
 
     @Singleton
     @Provides
-    fun provideSignInIntent() : MakeSignInIntent = MakeFirebaseSignIntent()
+    fun provideSignInIntentMaker() : MakeSignInIntent = MakeFirebaseSignIntent()
+
+    @Singleton
+    @Provides
+    fun provideLogOutDoer(authUi: AuthUI) : DoLogOut = DoFirebaseLogOut(authUi)
 
     @Singleton
     @Provides

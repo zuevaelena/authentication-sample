@@ -1,8 +1,10 @@
 package dev.sample.authentication.content.ui
 
+import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import dev.sample.authentication.content.usecase.DoLogOut
 import dev.sample.authentication.content.usecase.MakeSignInIntent
 import dev.sample.authentication.content.usecase.FetchUser
 import dev.sample.authentication.content.usecase.ObserveAuthState
@@ -14,6 +16,7 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(
         private val makeSignInIntent: MakeSignInIntent
+        , private val doLogOut: DoLogOut
         , private val fetchUser: FetchUser
         , private val observeAuthState: ObserveAuthState) : ViewModel() {
 
@@ -33,8 +36,11 @@ class ContentViewModel @Inject constructor(
         return makeSignInIntent.execute()
     }
 
-    fun logOut() {
-        // TODO implement
+    fun logOut(context: Context) {
+        if(userData.value?.isLoggedIn() == false) {
+            throw IllegalAccessException("Cannot log out when logged out already")
+        }
+        doLogOut.execute(context)
     }
 
 }
