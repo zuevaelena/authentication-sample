@@ -3,8 +3,8 @@ package dev.sample.authentication.content.di
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
-import dev.sample.authentication.FirebaseSignInHandler
-import dev.sample.authentication.SignInHandler
+import dev.sample.authentication.content.usecase.MakeFirebaseSignIntent
+import dev.sample.authentication.content.usecase.MakeSignInIntent
 import dev.sample.authentication.content.usecase.FetchFirebaseUser
 import dev.sample.authentication.content.usecase.FetchUser
 import dev.sample.authentication.content.usecase.ObserveAuthState
@@ -17,7 +17,7 @@ class ContentViewModelModule {
 
     @Singleton
     @Provides
-    fun provideSignInHandler() : SignInHandler = FirebaseSignInHandler()
+    fun provideSignInIntent() : MakeSignInIntent = MakeFirebaseSignIntent()
 
     @Singleton
     @Provides

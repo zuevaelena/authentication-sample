@@ -3,7 +3,7 @@ package dev.sample.authentication.content.ui
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import dev.sample.authentication.SignInHandler
+import dev.sample.authentication.content.usecase.MakeSignInIntent
 import dev.sample.authentication.content.usecase.FetchUser
 import dev.sample.authentication.content.usecase.ObserveAuthState
 import dev.sample.authentication.entity.User
@@ -13,7 +13,7 @@ import javax.inject.Inject
  * Data-handling business logic for Content screen.
  */
 class ContentViewModel @Inject constructor(
-        private val signInHandler: SignInHandler
+        private val makeSignInIntent: MakeSignInIntent
         , private val fetchUser: FetchUser
         , private val observeAuthState: ObserveAuthState) : ViewModel() {
 
@@ -30,7 +30,7 @@ class ContentViewModel @Inject constructor(
             throw IllegalAccessException("Cannot get sign in intent while logged in")
         }
 
-        return signInHandler.makeSignInIntent()
+        return makeSignInIntent.execute()
     }
 
     fun logOut() {

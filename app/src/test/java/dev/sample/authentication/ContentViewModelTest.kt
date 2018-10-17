@@ -2,7 +2,7 @@ package dev.sample.authentication
 
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.sample.authentication.fakeobjects.FakeSignInHandler
+import dev.sample.authentication.fakeobjects.FakeMakeSignInIntent
 import dev.sample.authentication.content.ui.ContentViewModel
 import dev.sample.authentication.content.usecase.FetchUser
 import dev.sample.authentication.content.usecase.ObserveAuthState
@@ -24,7 +24,7 @@ import java.lang.Exception
  */
 class ContentViewModelTest {
 
-    private val fakeSignInHandler: FakeSignInHandler = FakeSignInHandler()
+    private val fakeMakeSignInIntent: FakeMakeSignInIntent = FakeMakeSignInIntent()
     private val fakeSignedInUser: FetchUser = FakeFetchSignedInUser()
     private val fakeSignedOutUser: FetchUser = FakeFetchSignedOutUser()
 
@@ -39,7 +39,7 @@ class ContentViewModelTest {
 
     @Test
     fun whenLoggedOut_gettingLogInIntent_success() {
-        viewModel = ContentViewModel(fakeSignInHandler, fakeSignedOutUser, observeAuthState)
+        viewModel = ContentViewModel(fakeMakeSignInIntent, fakeSignedOutUser, observeAuthState)
 
         assertThat(viewModel.getSignInIntent() is Intent, `is`(true))
     }
@@ -56,7 +56,7 @@ class ContentViewModelTest {
 
     @Test
     fun whenLoggedIn_gettingLogInIntent_exception() {
-        viewModel = ContentViewModel(fakeSignInHandler, fakeSignedInUser, observeAuthState)
+        viewModel = ContentViewModel(fakeMakeSignInIntent, fakeSignedInUser, observeAuthState)
 
         try {
             viewModel.getSignInIntent()
