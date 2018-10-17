@@ -4,7 +4,8 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.SignInHandler
-import dev.sample.authentication.data.UserRepository
+import dev.sample.authentication.content.usecase.FetchUser
+import dev.sample.authentication.content.usecase.ObserveAuthState
 import dev.sample.authentication.entity.User
 import javax.inject.Inject
 
@@ -13,13 +14,15 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(
         private val signInHandler: SignInHandler
-        , private val repository: UserRepository) : ViewModel() {
+        , private val fetchUser: FetchUser
+        , private val observeAuthState: ObserveAuthState) : ViewModel() {
 
     var userData: LiveData<User>
         private set
 
     init {
-        userData = repository.fetchUser()
+        userData = fetchUser.execute()
+        observeAuthState.execute()
     }
 
     fun getSignInIntent(): Intent {
