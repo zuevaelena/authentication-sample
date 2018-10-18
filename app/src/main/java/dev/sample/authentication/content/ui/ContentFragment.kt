@@ -35,7 +35,7 @@ class ContentFragment : Fragment() {
 
     private lateinit var binding: FragmentContentBinding
 
-    private var userObserver: Observer<User> = Observer { user -> binding.user = user }
+    private var userObserver: Observer<User> = Observer { user -> updateUi() }
 
     override fun onAttach(context: Context?) {
         DaggerContentFragmentComponent.builder().build().inject(this)
@@ -45,16 +45,31 @@ class ContentFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)[ContentViewModel::class.java]
 
-        // TODO reconsider this
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
+        binding.setLifecycleOwner(this@ContentFragment)
+
+        updateUi()
+
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         viewModel.userData.observe(this, userObserver)
+    }
 
+    override fun onStop() {
+        super.onStop()
+
+        viewModel.userData.removeObserver(userObserver)
+    }
+
+    private fun updateUi() {
         binding.apply {
-            setLifecycleOwner(this@ContentFragment)
-
             user = viewModel.userData.value
 
             // TODO do it properly
@@ -66,9 +81,11 @@ class ContentFragment : Fragment() {
                     })
                     .load(viewModel.userData.value?.photoUrl)
                     .into(userPhoto)
-        }
 
-        return binding.root
+            // TODO do it properly too
+            gotoLogin.setOnClickListener { startActivity(viewModel.getSignInIntent()) }
+            doLogout.setOnClickListener { viewModel.logOut(requireContext()) }
+        }
     }
 
 }

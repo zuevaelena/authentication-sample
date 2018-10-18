@@ -15,6 +15,6 @@ interface FetchUser {
 
 class FetchFirebaseUser @Inject constructor(private val repository: UserRepository) : FetchUser {
 
-    override fun execute() = repository.fetchUser()
+    override fun execute() = repository.fetchUser(true)
 
 }
