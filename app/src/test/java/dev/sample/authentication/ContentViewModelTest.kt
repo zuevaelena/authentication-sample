@@ -28,13 +28,13 @@ class ContentViewModelTest {
 
     private val fakeMakeSignInIntent: FakeMakeSignInIntent = FakeMakeSignInIntent()
 
-    @Mock
-    private val fakeDoLogOut: DoLogOut = mock(DoLogOut::class.java)
-
     private val fakeSignedInUser: FetchUser = FakeFetchSignedInUser()
     private val fakeSignedOutUser: FetchUser = FakeFetchSignedOutUser()
 
     private lateinit var viewModel: ContentViewModel
+
+    @Mock
+    private val doLogOut: DoLogOut = mock(DoLogOut::class.java)
 
     @Mock
     private var observeAuthState : ObserveAuthState = mock(ObserveAuthState::class.java)
@@ -48,14 +48,14 @@ class ContentViewModelTest {
 
     @Test
     fun whenLoggedOut_gettingLogInIntent_success() {
-        viewModel = ContentViewModel(fakeMakeSignInIntent, fakeDoLogOut, fakeSignedOutUser, observeAuthState)
+        viewModel = ContentViewModel(fakeMakeSignInIntent, doLogOut, fakeSignedOutUser, observeAuthState)
 
         assertThat(viewModel.getSignInIntent() is Intent, `is`(true))
     }
 
     @Test
     fun whenLoggedOut_doingLogout_exception() {
-        viewModel = ContentViewModel(fakeMakeSignInIntent, fakeDoLogOut, fakeSignedOutUser, observeAuthState)
+        viewModel = ContentViewModel(fakeMakeSignInIntent, doLogOut, fakeSignedOutUser, observeAuthState)
 
         try {
             viewModel.logOut(context)
@@ -68,12 +68,12 @@ class ContentViewModelTest {
 
     @Test
     fun whenGetErrorOnLogIn_informAbout() {
-        // TODO implement the test
+        TODO("implement")
     }
 
     @Test
     fun whenLoggedIn_gettingLogInIntent_exception() {
-        viewModel = ContentViewModel(fakeMakeSignInIntent, fakeDoLogOut, fakeSignedInUser, observeAuthState)
+        viewModel = ContentViewModel(fakeMakeSignInIntent, doLogOut, fakeSignedInUser, observeAuthState)
 
         try {
             viewModel.getSignInIntent()
@@ -86,11 +86,11 @@ class ContentViewModelTest {
 
     @Test
     fun whenAuthStateChanged_userDataRetrieved() {
-        // TODO implement the test
+        TODO("implement")
     }
 
     @Test
     fun whenGetErrorOnLogOut_informAbout() {
-        // TODO implement the test
+        TODO("implement")
     }
 }

@@ -32,6 +32,6 @@ class ContentViewModelModule {
 
     @Singleton
     @Provides
-    fun provideAuthStateObserver(firebaseAuth : FirebaseAuth, userFetcher: FetchUser) : ObserveAuthState = ObserveFirebaseAuthState(firebaseAuth, userFetcher)
+    fun provideAuthStateObserver(firebaseAuth : FirebaseAuth) : ObserveAuthState = ObserveFirebaseAuthState(firebaseAuth)
 
 }

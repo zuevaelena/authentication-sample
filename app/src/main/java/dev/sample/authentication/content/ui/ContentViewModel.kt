@@ -18,14 +18,15 @@ class ContentViewModel @Inject constructor(
         private val makeSignInIntent: MakeSignInIntent
         , private val doLogOut: DoLogOut
         , private val fetchUser: FetchUser
-        , private val observeAuthState: ObserveAuthState) : ViewModel() {
+        , observeAuthState: ObserveAuthState) : ViewModel() {
 
     var userData: LiveData<User>
         private set
 
     init {
         userData = fetchUser.execute()
-        observeAuthState.execute()
+
+        observeAuthState.execute { userData = fetchUser.execute() }
     }
 
     fun getSignInIntent(): Intent {
