@@ -8,7 +8,7 @@ import dev.sample.authentication.content.usecase.DoFirebaseLogOut
 import dev.sample.authentication.content.usecase.DoLogOut
 import dev.sample.authentication.content.usecase.MakeFirebaseSignIntent
 import dev.sample.authentication.content.usecase.MakeSignInIntent
-import dev.sample.authentication.content.usecase.FetchFirebaseUser
+import dev.sample.authentication.content.usecase.DefaultFetchUser
 import dev.sample.authentication.content.usecase.FetchUser
 import dev.sample.authentication.content.usecase.ObserveAuthState
 import dev.sample.authentication.content.usecase.ObserveFirebaseAuthState
@@ -28,7 +28,7 @@ class ContentViewModelModule {
 
     @Singleton
     @Provides
-    fun provideUserFetcher(userRepository : UserRepository) : FetchUser = FetchFirebaseUser(userRepository)
+    fun provideUserFetcher(userRepository : UserRepository) : FetchUser = DefaultFetchUser(userRepository)
 
     @Singleton
     @Provides

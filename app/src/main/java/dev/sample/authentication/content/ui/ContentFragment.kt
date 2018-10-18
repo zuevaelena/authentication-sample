@@ -32,7 +32,6 @@ class ContentFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: ContentViewModel
-
     private lateinit var binding: FragmentContentBinding
 
     private var userObserver: Observer<User> = Observer { user -> updateUi() }

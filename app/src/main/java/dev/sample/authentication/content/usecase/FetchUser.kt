@@ -13,7 +13,7 @@ interface FetchUser {
     fun execute() : LiveData<User>
 }
 
-class FetchFirebaseUser @Inject constructor(private val repository: UserRepository) : FetchUser {
+class DefaultFetchUser @Inject constructor(private val repository: UserRepository) : FetchUser {
 
     override fun execute() = repository.fetchUser(true)
 
