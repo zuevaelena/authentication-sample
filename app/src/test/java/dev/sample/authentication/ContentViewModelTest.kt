@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.sample.authentication.fakeobjects.FakeMakeSignInIntent
-import dev.sample.authentication.content.ui.ContentViewModel
-import dev.sample.authentication.content.usecase.DoLogOut
-import dev.sample.authentication.content.usecase.FetchUser
-import dev.sample.authentication.content.usecase.ObserveAuthState
+import dev.sample.authentication.feature.content.ui.ContentViewModel
+import dev.sample.authentication.feature.content.usecase.DoLogOut
+import dev.sample.authentication.feature.content.usecase.FetchUser
+import dev.sample.authentication.feature.content.usecase.ObserveAuthState
 import dev.sample.authentication.fakeobjects.FakeFetchSignedInUser
 import dev.sample.authentication.fakeobjects.FakeFetchSignedOutUser
 
@@ -17,7 +17,6 @@ import org.junit.Assert.fail
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.Mock
 import org.mockito.Mockito.mock
 import java.lang.Exception
 
@@ -26,20 +25,14 @@ import java.lang.Exception
  */
 class ContentViewModelTest {
 
-    private val fakeMakeSignInIntent: FakeMakeSignInIntent = FakeMakeSignInIntent()
+    private lateinit var viewModel: ContentViewModel
 
+    private val fakeMakeSignInIntent: FakeMakeSignInIntent = FakeMakeSignInIntent()
     private val fakeSignedInUser: FetchUser = FakeFetchSignedInUser()
     private val fakeSignedOutUser: FetchUser = FakeFetchSignedOutUser()
 
-    private lateinit var viewModel: ContentViewModel
-
-    @Mock
     private val doLogOut: DoLogOut = mock(DoLogOut::class.java)
-
-    @Mock
-    private var observeAuthState : ObserveAuthState = mock(ObserveAuthState::class.java)
-
-    @Mock
+    private val observeAuthState : ObserveAuthState = mock(ObserveAuthState::class.java)
     private val context: Context = mock(Context::class.java)
 
     @get:Rule

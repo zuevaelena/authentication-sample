@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import dev.sample.authentication.content.ui.ContentViewModel
+import dev.sample.authentication.feature.content.ui.ContentViewModel
 
 
 @Module
