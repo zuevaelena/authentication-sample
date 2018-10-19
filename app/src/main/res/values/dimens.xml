@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="default_vertical_margin">16dp</dimen>
+    <dimen name="default_horizontal_margin">16dp</dimen>
+
+    <dimen name="half_default_vertical_margin">8dp</dimen>
+    <dimen name="half_default_horizontal_margin">8dp</dimen>
+
     <dimen name="user_card_margin">16dp</dimen>
     <dimen name="user_photo_width">56dp</dimen>
 </resources>

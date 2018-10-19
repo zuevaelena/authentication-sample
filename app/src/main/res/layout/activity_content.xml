@@ -23,9 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:backgroundTint="@color/colorPrimaryDark"
+            app:hideOnScroll="true"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="@drawable/ic_drawer_menu"
-            app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            app:popupTheme="@style/Theme.MaterialComponents.Light"/>
+            app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -2,11 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_login"
-        android:title="@string/menu_login"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_logout"
-        android:title="@string/menu_logout"
-        app:showAsAction="never" />
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/do_search"
+        app:showAsAction="always" />
 </menu>
