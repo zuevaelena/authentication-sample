@@ -14,6 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:headerLayout="@layout/widget_user_card"
         app:menu="@menu/menu_bottomsheet"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
