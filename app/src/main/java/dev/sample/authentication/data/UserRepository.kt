@@ -6,13 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dev.sample.authentication.entity.User
+import javax.inject.Inject
 
 
 interface UserRepository {
     fun fetchUser(forceRequest: Boolean = false): LiveData<User>
 }
 
-class FirebaseUserRepository : UserRepository {
+class FirebaseUserRepository @Inject constructor(val firebaseAuth: FirebaseAuth) : UserRepository {
     private val observableData: MutableLiveData<User> = MutableLiveData()
 
     // TODO a proper cache is better to be implemented, like Room database
@@ -20,7 +21,7 @@ class FirebaseUserRepository : UserRepository {
 
     override fun fetchUser(forceRequest: Boolean): LiveData<User> {
         if (user == null || forceRequest) {
-            val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+            val firebaseUser: FirebaseUser? = firebaseAuth.currentUser
             user = User(firebaseUser?.uid ?: User.getAnonymousId()
                     , firebaseUser?.displayName ?: User.getAnonymousName()
                     , firebaseUser?.photoUrl ?: Uri.EMPTY)

@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import dev.sample.authentication.R
-import dev.sample.authentication.feature.bottommenu.ui.BottomSheetMenuFragment
+import dev.sample.authentication.feature.bottommenu.ui.BottomMenuFragment
 import kotlinx.android.synthetic.main.activity_content.bottom_app_bar
 
 class ContentActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class ContentActivity : AppCompatActivity() {
                 Toast.makeText(this, "search to be implemented", Toast.LENGTH_SHORT).show()
             }
             android.R.id.home -> {
-                val bottomMenuFragment = BottomSheetMenuFragment()
+                val bottomMenuFragment = BottomMenuFragment()
                 bottomMenuFragment.show(supportFragmentManager, bottomMenuFragment.tag)
             }
         }

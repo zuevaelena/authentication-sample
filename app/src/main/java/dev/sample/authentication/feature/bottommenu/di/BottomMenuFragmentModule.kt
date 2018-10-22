@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import dev.sample.authentication.di.ViewModelKey
+import dev.sample.authentication.di.viewmodel.ViewModelKey
 import dev.sample.authentication.feature.bottommenu.ui.BottomMenuViewModel
 
 @Module

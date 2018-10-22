@@ -1,20 +1,18 @@
 package dev.sample.authentication.feature.content.ui
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import dagger.android.support.DaggerFragment
 import dev.sample.authentication.R
 import dev.sample.authentication.entity.User
-import dev.sample.authentication.feature.content.di.DaggerContentFragmentComponent
 import kotlinx.android.synthetic.main.fragment_content.user_name
 import kotlinx.android.synthetic.main.fragment_content.user_photo
 import javax.inject.Inject
@@ -23,7 +21,7 @@ import javax.inject.Inject
 /**
  * UI-controller of Content screen.
  */
-class ContentFragment : Fragment() {
+class ContentFragment : DaggerFragment() {
     companion object {
         @JvmStatic
         fun newInstance() = ContentFragment()
@@ -35,12 +33,6 @@ class ContentFragment : Fragment() {
     private lateinit var viewModel: ContentViewModel
 
     private var userObserver: Observer<User> = Observer { _ -> updateUi() }
-
-    override fun onAttach(context: Context?) {
-        DaggerContentFragmentComponent.builder().build().inject(this)
-
-        super.onAttach(context)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
