@@ -1,11 +1,11 @@
 package dev.sample.authentication.feature.content.ui
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,9 +13,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dev.sample.authentication.R
-import dev.sample.authentication.databinding.FragmentContentBinding
-import dev.sample.authentication.feature.content.di.DaggerContentFragmentComponent
 import dev.sample.authentication.entity.User
+import dev.sample.authentication.feature.content.di.DaggerContentFragmentComponent
+import kotlinx.android.synthetic.main.fragment_content.user_name
+import kotlinx.android.synthetic.main.fragment_content.user_photo
 import javax.inject.Inject
 
 
@@ -32,7 +33,6 @@ class ContentFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: ContentViewModel
-    private lateinit var binding: FragmentContentBinding
 
     private var userObserver: Observer<User> = Observer { _ -> updateUi() }
 
@@ -47,16 +47,21 @@ class ContentFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)[ContentViewModel::class.java]
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
-        binding.setLifecycleOwner(this@ContentFragment)
+        // TODO put back data binding
 
-        updateUi()
+        val contentView: View = inflater.inflate(R.layout.fragment_content, container, false)
 
-        return binding.root
+        // TODO put it back
+        // updateUi()
+
+        return contentView
     }
 
     override fun onStart() {
         super.onStart()
+
+        // TODO delete it
+        updateUi()
 
         viewModel.userData.observe(this, userObserver)
     }
@@ -68,23 +73,19 @@ class ContentFragment : Fragment() {
     }
 
     private fun updateUi() {
-        binding.apply {
-            user = viewModel.userData.value
+        if (user_name == null) return
 
-            // TODO do it properly
-            Glide.with(this@ContentFragment)
-                    .setDefaultRequestOptions(RequestOptions().apply{
-                        //placeholder(R.drawable.ic_account_circle) // TODO show something while loading
-                        error(R.drawable.ic_account_circle)
-                        circleCrop()
-                    })
-                    .load(viewModel.userData.value?.photoUrl)
-                    .into(userPhoto)
+        user_name.text = viewModel.userData.value?.name ?: ""
 
-            // TODO do it properly too
-            gotoLogin.setOnClickListener { startActivity(viewModel.getSignInIntent()) }
-            doLogout.setOnClickListener { viewModel.logOut(requireContext()) }
-        }
+        // TODO do it properly
+        Glide.with(this@ContentFragment)
+                .setDefaultRequestOptions(RequestOptions().apply {
+                    //placeholder(R.drawable.ic_account_circle) // TODO show something while loading
+                    error(R.drawable.ic_account_circle)
+                    circleCrop()
+                })
+                .load(viewModel.userData.value?.photoUrl ?: Uri.EMPTY)
+                .into(user_photo)
     }
 
 }

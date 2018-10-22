@@ -5,9 +5,9 @@ import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.sample.authentication.fakeobjects.FakeMakeSignInIntent
 import dev.sample.authentication.feature.content.ui.ContentViewModel
-import dev.sample.authentication.feature.content.usecase.DoLogOut
-import dev.sample.authentication.feature.content.usecase.FetchUser
-import dev.sample.authentication.feature.content.usecase.ObserveAuthState
+import dev.sample.authentication.feature.bottommenu.usecase.DoLogOut
+import dev.sample.authentication.usecase.FetchUser
+import dev.sample.authentication.usecase.ObserveAuthState
 import dev.sample.authentication.fakeobjects.FakeFetchSignedInUser
 import dev.sample.authentication.fakeobjects.FakeFetchSignedOutUser
 

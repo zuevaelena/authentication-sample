@@ -21,11 +21,13 @@
         app:layout_constraintLeft_toLeftOf="parent" />
     <TextView
         android:id="@id/user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_margin"
         android:text="To be added"
         style="@style/UserCard.Name"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/goto_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/user_photo" />
     <Button
@@ -36,17 +38,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/user_name"
         android:visibility="gone"/>
     <Button
-        android:id="@id/do_logout"
+        android:id="@+id/do_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/do_logout"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/goto_login"
         android:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

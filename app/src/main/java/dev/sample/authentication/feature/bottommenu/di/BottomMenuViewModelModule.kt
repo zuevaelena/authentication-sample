@@ -1,4 +1,4 @@
-package dev.sample.authentication.feature.content.di
+package dev.sample.authentication.feature.bottommenu.di
 
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -16,21 +16,8 @@ import dev.sample.authentication.usecase.ObserveAuthState
 import dev.sample.authentication.usecase.ObserveFirebaseAuthState
 import javax.inject.Singleton
 
-@Module(includes = [ContentFragmentModule::class])
-class ContentViewModelModule {
-
-    @Singleton
-    @Provides
-    fun provideUserRepository(): UserRepository = FirebaseUserRepository()
-
-    @Singleton
-    @Provides
-    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
-
-    @Singleton
-    @Provides
-    fun provideFirebaseAuthUi(): AuthUI = AuthUI.getInstance()
-
+@Module
+class BottomMenuViewModelModule {
     @Singleton
     @Provides
     fun provideSignInIntentMaker(): MakeSignInIntent = MakeFirebaseSignIntent()
@@ -47,4 +34,15 @@ class ContentViewModelModule {
     @Provides
     fun provideAuthStateObserver(firebaseAuth: FirebaseAuth): ObserveAuthState = ObserveFirebaseAuthState(firebaseAuth)
 
+    @Singleton
+    @Provides
+    fun provideUserRepository(): UserRepository = FirebaseUserRepository()
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAuthUi(): AuthUI = AuthUI.getInstance()
 }

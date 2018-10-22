@@ -33,8 +33,10 @@ class ContentActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
-            R.id.app_bar_search -> { Toast.makeText(this, "search to be implemented", Toast.LENGTH_SHORT).show() }
+        when (item?.itemId) {
+            R.id.app_bar_search -> {
+                Toast.makeText(this, "search to be implemented", Toast.LENGTH_SHORT).show()
+            }
             android.R.id.home -> {
                 val bottomMenuFragment = BottomSheetMenuFragment()
                 bottomMenuFragment.show(supportFragmentManager, bottomMenuFragment.tag)

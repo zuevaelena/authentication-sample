@@ -9,7 +9,7 @@ import dev.sample.authentication.entity.User
 
 
 interface UserRepository {
-    fun fetchUser(forceRequest: Boolean = false) : LiveData<User>
+    fun fetchUser(forceRequest: Boolean = false): LiveData<User>
 }
 
 class FirebaseUserRepository : UserRepository {
@@ -18,8 +18,8 @@ class FirebaseUserRepository : UserRepository {
     // TODO a proper cache is better to be implemented, like Room database
     private var user: User? = null
 
-    override fun fetchUser(forceRequest: Boolean) : LiveData<User> {
-        if(user == null || forceRequest) {
+    override fun fetchUser(forceRequest: Boolean): LiveData<User> {
+        if (user == null || forceRequest) {
             val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
             user = User(firebaseUser?.uid ?: User.getAnonymousId()
                     , firebaseUser?.displayName ?: User.getAnonymousName()
