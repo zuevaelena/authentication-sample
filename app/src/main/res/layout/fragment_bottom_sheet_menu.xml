@@ -3,14 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <import type="dev.sample.authentication.R" />
-
-        <variable
-            name="user"
-            type="dev.sample.authentication.entities.User" />
-    </data>
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/bottom_sheet_navigation"
         android:layout_width="match_parent"
