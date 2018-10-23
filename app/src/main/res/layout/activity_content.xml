@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".feature.content.ui.ContentActivity">
+    tools:context=".features.content.ui.ContentActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container"

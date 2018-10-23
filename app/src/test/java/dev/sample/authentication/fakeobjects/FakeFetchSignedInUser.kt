@@ -3,8 +3,8 @@ package dev.sample.authentication.fakeobjects
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.sample.authentication.usecase.FetchUser
-import dev.sample.authentication.entity.User
+import dev.sample.authentication.usecases.FetchUser
+import dev.sample.authentication.entities.User
 import org.mockito.Mockito.mock
 
 class FakeFetchSignedInUser : FetchUser {

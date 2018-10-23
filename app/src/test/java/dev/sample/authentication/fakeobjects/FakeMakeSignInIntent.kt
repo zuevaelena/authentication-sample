@@ -1,7 +1,7 @@
 package dev.sample.authentication.fakeobjects
 
 import android.content.Intent
-import dev.sample.authentication.feature.bottommenu.usecase.MakeSignInIntent
+import dev.sample.authentication.features.bottommenu.usecase.MakeSignInIntent
 import org.mockito.Mockito.mock
 
 class FakeMakeSignInIntent : MakeSignInIntent {
