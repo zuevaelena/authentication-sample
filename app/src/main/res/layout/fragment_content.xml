@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="dev.sample.authentication.R" />
+
         <variable
             name="user"
             type="dev.sample.authentication.entities.User" />
@@ -32,6 +34,8 @@
             android:layout_width="@dimen/user_photo_width"
             android:layout_height="@dimen/user_photo_width"
             android:scaleType="centerCrop"
+            app:imageUrl="@{user.photoUrl}"
+            app:errorDrawable="@{R.drawable.ic_account_circle}"
             app:layout_constraintBottom_toTopOf="@+id/user_name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
