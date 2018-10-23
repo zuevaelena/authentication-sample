@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.DaggerFragment
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentContentBinding
-import dev.sample.authentication.entities.User
 import javax.inject.Inject
 
 
@@ -30,32 +28,15 @@ class ContentFragment : DaggerFragment() {
     private lateinit var viewModel: ContentViewModel
     private lateinit var binding: FragmentContentBinding
 
-    private var userObserver: Observer<User> = Observer { _ -> updateUi() }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContentViewModel::class.java)
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
         binding.setLifecycleOwner(this@ContentFragment)
 
-        updateUi()
-        viewModel.userData.observe(this, userObserver)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContentViewModel::class.java)
+        binding.viewModel = viewModel
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        viewModel.userData.removeObserver(userObserver)
-
-        super.onDestroyView()
-    }
-
-    private fun updateUi() {
-        binding.apply {
-            user = viewModel.userData.value
-        }
     }
 
 }
