@@ -1,24 +1,19 @@
 package dev.sample.authentication.features.bottommenu.ui
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import dev.sample.authentication.R
+import dev.sample.authentication.databinding.FragmentBottomSheetMenuBinding
+import dev.sample.authentication.databinding.WidgetUserCardBinding
 import dev.sample.authentication.entities.User
 import dev.sample.authentication.ui.DaggerBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_bottom_sheet_menu.bottom_sheet_navigation
-import kotlinx.android.synthetic.main.widget_user_card.do_logout
-import kotlinx.android.synthetic.main.widget_user_card.goto_login
-import kotlinx.android.synthetic.main.widget_user_card.user_name
-import kotlinx.android.synthetic.main.widget_user_card.user_photo
 import javax.inject.Inject
 
 class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
@@ -27,21 +22,38 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: BottomMenuViewModel
+    private lateinit var menuBinding: FragmentBottomSheetMenuBinding
+    private lateinit var headerBinding: WidgetUserCardBinding
 
     private var userObserver: Observer<User> = Observer { _ -> updateHeader() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomMenuViewModel::class.java)
 
-        val menuView: View = inflater.inflate(R.layout.fragment_bottom_sheet_menu, container, false)
+        menuBinding = DataBindingUtil.inflate(inflater
+                , R.layout.fragment_bottom_sheet_menu
+                , container
+                , false)
+        menuBinding.setLifecycleOwner(this)
 
-        return menuView
+        headerBinding = DataBindingUtil.inflate(inflater
+                , R.layout.widget_user_card
+                , menuBinding.root as ViewGroup
+                , false)
+        headerBinding.setLifecycleOwner(this)
+
+        menuBinding.bottomSheetNavigation.addHeaderView(headerBinding.root)
+
+        updateHeader()
+        viewModel.userData.observe(this, userObserver)
+
+        return menuBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        bottom_sheet_navigation.setNavigationItemSelectedListener {
+        menuBinding.bottomSheetNavigation.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.goto_content -> Toast.makeText(requireContext(), "Go to content view", Toast.LENGTH_SHORT).show()
                 R.id.goto_user_info -> Toast.makeText(requireContext(), "Go to user info view", Toast.LENGTH_SHORT).show()
@@ -50,39 +62,20 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        updateHeader()
-
-        viewModel.userData.observe(this, userObserver)
-    }
-
-    override fun onPause() {
+    override fun onDestroyView() {
         viewModel.userData.removeObserver(userObserver)
 
-        super.onPause()
+        super.onDestroyView()
     }
 
     private fun updateHeader() {
-        if (user_name == null) return
+        headerBinding.apply {
+            user = viewModel.userData.value
 
-        user_name.text = viewModel.userData.value?.name ?: ""
+            gotoLogin.setOnClickListener { startActivity(viewModel.getSignInIntent()) }
+            doLogout.setOnClickListener { viewModel.logOut(requireContext()) }
+        }
 
-        goto_login.visibility = if (viewModel.userData.value?.isLoggedIn() == true) View.GONE else View.VISIBLE
-        do_logout.visibility = if (viewModel.userData.value?.isLoggedIn() == true) View.VISIBLE else View.GONE
-
-        goto_login.setOnClickListener { startActivity(viewModel.getSignInIntent()) }
-        do_logout.setOnClickListener { viewModel.logOut(requireContext()) }
-
-        Glide.with(this)
-                .setDefaultRequestOptions(RequestOptions().apply {
-                    //placeholder(R.drawable.ic_account_circle) // TODO show something while loading
-                    error(R.drawable.ic_account_circle)
-                    circleCrop()
-                })
-                .load(viewModel.userData.value?.photoUrl ?: Uri.EMPTY)
-                .into(user_photo)
     }
 
 }

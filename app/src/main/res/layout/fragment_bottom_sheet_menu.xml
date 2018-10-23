@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <import type="dev.sample.authentication.R" />
+
+        <variable
+            name="user"
+            type="dev.sample.authentication.entities.User" />
+    </data>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/bottom_sheet_navigation"
@@ -14,7 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:headerLayout="@layout/widget_user_card"
         app:menu="@menu/menu_bottomsheet"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

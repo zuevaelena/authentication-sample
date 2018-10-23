@@ -16,7 +16,7 @@ interface UserRepository {
 class FirebaseUserRepository @Inject constructor(val firebaseAuth: FirebaseAuth) : UserRepository {
     private val observableData: MutableLiveData<User> = MutableLiveData()
 
-    // TODO a proper cache is better to be implemented, like Room database
+    // TODO a proper cache, like Room database, is better to be implemented. consider this
     private var user: User? = null
 
     override fun fetchUser(forceRequest: Boolean): LiveData<User> {
@@ -27,6 +27,6 @@ class FirebaseUserRepository @Inject constructor(val firebaseAuth: FirebaseAuth)
                     , firebaseUser?.photoUrl ?: Uri.EMPTY)
         }
 
-        return observableData.apply { value = user }
+        return observableData.apply { postValue(user) }
     }
 }
