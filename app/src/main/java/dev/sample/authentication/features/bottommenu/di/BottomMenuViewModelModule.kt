@@ -21,7 +21,7 @@ class BottomMenuViewModelModule {
     fun provideFirebaseAuthUi(): AuthUI = AuthUI.getInstance()
 
     @Provides
-    fun provideSignInIntentMaker(): MakeSignInIntent = MakeFirebaseSignIntent()
+    fun provideSignInIntentMaker(authUi: AuthUI): MakeSignInIntent = MakeFirebaseSignIntent(authUi)
 
     @Provides
     fun provideLogOutDoer(authUi: AuthUI): DoLogOut = DoFirebaseLogOut(authUi)

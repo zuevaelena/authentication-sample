@@ -2,13 +2,13 @@ package dev.sample.authentication.features.bottommenu.usecase
 
 import android.content.Intent
 import com.firebase.ui.auth.AuthUI
+import javax.inject.Inject
 
 interface MakeSignInIntent {
     fun execute(): Intent
 }
 
-class MakeFirebaseSignIntent : MakeSignInIntent {
-    private val authUiInstance: AuthUI = AuthUI.getInstance()
+class MakeFirebaseSignIntent @Inject constructor(private val firebaseAuthUi: AuthUI) : MakeSignInIntent {
 
     override fun execute(): Intent {
         val authenticationProviders = listOf(
@@ -16,7 +16,7 @@ class MakeFirebaseSignIntent : MakeSignInIntent {
                 , AuthUI.IdpConfig.EmailBuilder().build() // auth by email
         )
 
-        return authUiInstance
+        return firebaseAuthUi
                 .createSignInIntentBuilder()
                 .setAvailableProviders(authenticationProviders)
                 .build()
