@@ -59,7 +59,6 @@ dependencies {
 
     // di android
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
-    //implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion" // with no support library
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
 
 
