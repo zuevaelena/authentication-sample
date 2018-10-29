@@ -71,9 +71,7 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            SIGN_IN_REQUEST -> {
-                processLogInResult(resultCode, data)
-            }
+            SIGN_IN_REQUEST -> processLogInResult(resultCode, data)
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
