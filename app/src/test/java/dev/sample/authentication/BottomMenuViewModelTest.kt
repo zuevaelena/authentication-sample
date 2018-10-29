@@ -69,6 +69,8 @@ class BottomMenuViewModelTest {
 
         // TODO reconsider this test; change to smth more meaningful?
         MatcherAssert.assertThat(signInResult is SignInSuccess, Matchers.`is`(true))
+
+        // TODO shall user data change also being tested here?
     }
 
     @Test
@@ -79,6 +81,8 @@ class BottomMenuViewModelTest {
 
         // TODO reconsider this test; change to smth more meaningful?
         MatcherAssert.assertThat(signInResult is SignInFailure, Matchers.`is`(true))
+
+        // TODO shall user data not-change also being tested here?
     }
 
     @Test

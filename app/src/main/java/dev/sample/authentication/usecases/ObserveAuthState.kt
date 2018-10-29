@@ -7,13 +7,23 @@ import javax.inject.Inject
  * Interactor (use case) for user authentication state.
  */
 interface ObserveAuthState {
-    fun execute(onChangeComplete: () -> Unit)
+    fun start(onChangeComplete: () -> Unit)
+    fun stop()
 }
 
 class ObserveFirebaseAuthState @Inject constructor(private val firebaseAuth: FirebaseAuth) : ObserveAuthState {
+    private lateinit var listener: FirebaseAuth.AuthStateListener
 
-    override fun execute(onChangeComplete: () -> Unit) {
-        firebaseAuth.addAuthStateListener { onChangeComplete() }
+    override fun start(onChangeComplete: () -> Unit) {
+        listener = FirebaseAuth.AuthStateListener { onChangeComplete() }
+
+        firebaseAuth.addAuthStateListener(listener)
+    }
+
+    override fun stop() {
+        if(listener != null) {
+            firebaseAuth.removeAuthStateListener(listener)
+        }
     }
 
 }

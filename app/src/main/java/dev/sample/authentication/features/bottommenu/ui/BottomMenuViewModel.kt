@@ -16,7 +16,9 @@ class BottomMenuViewModel @Inject constructor(
         private val signIn: SignIn
         , private val doLogOut: DoLogOut
         , private val fetchUser: FetchUser
-        , observeAuthState: ObserveAuthState) : ViewModel() {
+        , private val observeAuthState: ObserveAuthState) : ViewModel() {
+
+    private val onAuthStateAction = { userData = fetchUser.execute() }
 
     var userData: LiveData<User>
         private set
@@ -24,14 +26,7 @@ class BottomMenuViewModel @Inject constructor(
     init {
         userData = fetchUser.execute()
 
-        /**
-         * TODO:
-         * Note: if you choose to use an AuthStateListener, make sure to unregister it before
-         * launching the FirebaseUI flow and re-register it after the flow returns.
-         * FirebaseUI performs auth operations internally which may trigger the listener
-         * before the flow is complete.
-         */
-        observeAuthState.execute { userData = fetchUser.execute() }
+        observeAuthState.start(onAuthStateAction)
     }
 
     fun getSignInIntent(): Intent {
@@ -39,10 +34,21 @@ class BottomMenuViewModel @Inject constructor(
             throw IllegalAccessException("Cannot get sign in intent while logged in")
         }
 
+        /**
+         * IMPORTANT Note: if you choose to use an AuthStateListener, make sure to unregister it before
+         * launching the FirebaseUI flow and re-register it after the flow returns.
+         * FirebaseUI performs auth operations internally which may trigger the listener
+         * before the flow is complete.
+         * From here: https://github.com/firebase/FirebaseUI-Android/blob/master/auth/README.md#handling-the-sign-in-response
+         */
+        observeAuthState.stop()
+
         return signIn.makeIntent()
     }
 
     fun getSignInResult(resultCode: Int, data: Intent?): SignInResult {
+        observeAuthState.start(onAuthStateAction)
+
         return signIn.processResult(resultCode, data)
     }
 

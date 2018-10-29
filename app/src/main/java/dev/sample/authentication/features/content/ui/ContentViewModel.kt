@@ -20,7 +20,7 @@ class ContentViewModel @Inject constructor(
     init {
         userData = fetchUser.execute()
 
-        observeAuthState.execute { userData = fetchUser.execute() }
+        observeAuthState.start { userData = fetchUser.execute() }
     }
 
 }
