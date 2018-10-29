@@ -6,13 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.entities.User
 import dev.sample.authentication.features.bottommenu.usecase.DoLogOut
-import dev.sample.authentication.features.bottommenu.usecase.MakeSignInIntent
+import dev.sample.authentication.features.bottommenu.usecase.SignIn
+import dev.sample.authentication.features.bottommenu.usecase.SignInResult
 import dev.sample.authentication.usecases.FetchUser
 import dev.sample.authentication.usecases.ObserveAuthState
 import javax.inject.Inject
 
 class BottomMenuViewModel @Inject constructor(
-        private val makeSignInIntent: MakeSignInIntent
+        private val signIn: SignIn
         , private val doLogOut: DoLogOut
         , private val fetchUser: FetchUser
         , observeAuthState: ObserveAuthState) : ViewModel() {
@@ -38,7 +39,11 @@ class BottomMenuViewModel @Inject constructor(
             throw IllegalAccessException("Cannot get sign in intent while logged in")
         }
 
-        return makeSignInIntent.execute()
+        return signIn.makeIntent()
+    }
+
+    fun getSignInResult(resultCode: Int, data: Intent?): SignInResult {
+        return signIn.processResult(resultCode, data)
     }
 
     fun logOut(context: Context, onSuccess: () -> Unit, onFailure: () -> Unit) {

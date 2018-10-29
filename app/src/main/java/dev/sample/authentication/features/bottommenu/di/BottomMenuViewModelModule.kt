@@ -7,8 +7,8 @@ import dagger.Provides
 import dev.sample.authentication.data.UserRepository
 import dev.sample.authentication.features.bottommenu.usecase.DoFirebaseLogOut
 import dev.sample.authentication.features.bottommenu.usecase.DoLogOut
-import dev.sample.authentication.features.bottommenu.usecase.MakeFirebaseSignIntent
-import dev.sample.authentication.features.bottommenu.usecase.MakeSignInIntent
+import dev.sample.authentication.features.bottommenu.usecase.FirebaseSignIn
+import dev.sample.authentication.features.bottommenu.usecase.SignIn
 import dev.sample.authentication.usecases.DefaultFetchUser
 import dev.sample.authentication.usecases.FetchUser
 import dev.sample.authentication.usecases.ObserveAuthState
@@ -21,7 +21,7 @@ class BottomMenuViewModelModule {
     fun provideFirebaseAuthUi(): AuthUI = AuthUI.getInstance()
 
     @Provides
-    fun provideSignInIntentMaker(authUi: AuthUI): MakeSignInIntent = MakeFirebaseSignIntent(authUi)
+    fun provideSignIn(authUi: AuthUI): SignIn = FirebaseSignIn(authUi)
 
     @Provides
     fun provideLogOutDoer(authUi: AuthUI): DoLogOut = DoFirebaseLogOut(authUi)

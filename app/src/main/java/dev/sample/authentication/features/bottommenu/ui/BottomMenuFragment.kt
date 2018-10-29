@@ -1,6 +1,5 @@
 package dev.sample.authentication.features.bottommenu.ui
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +9,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.firebase.ui.auth.ErrorCodes
-import com.firebase.ui.auth.IdpResponse
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentBottomSheetMenuBinding
 import dev.sample.authentication.databinding.WidgetUserCardBinding
+import dev.sample.authentication.features.bottommenu.usecase.SignInError
+import dev.sample.authentication.features.bottommenu.usecase.SignInFailure
 import dev.sample.authentication.ui.DaggerBottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -71,8 +70,10 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when(requestCode) {
-            SIGN_IN_REQUEST -> { processLogInResult(resultCode, data) }
+        when (requestCode) {
+            SIGN_IN_REQUEST -> {
+                processLogInResult(resultCode, data)
+            }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
@@ -82,11 +83,11 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
     }
 
     private fun processLogInResult(resultCode: Int, data: Intent?) {
-        val response: IdpResponse? = IdpResponse.fromResultIntent(data)
+        val signInResult = headerViewModel.getSignInResult(resultCode, data)
 
-        if(resultCode != RESULT_OK && response != null) {
-            val errorMessageResource: Int = when(response.error?.errorCode) {
-                ErrorCodes.NO_NETWORK -> R.string.error_no_network
+        if (signInResult is SignInFailure) {
+            val errorMessageResource: Int = when (signInResult.error) {
+                SignInError.NO_NETWORK -> R.string.error_no_network
                 else -> R.string.error_default
             }
             Toast.makeText(requireContext(), errorMessageResource
@@ -97,11 +98,11 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
 
     // TODO move it to standalone interface in order to implement logout confirmation dialog
     private fun doLogOut() {
-       headerViewModel.logOut(requireContext(), {}, {
-           Toast.makeText(requireContext(), R.string.error_default
-                   , Toast.LENGTH_LONG)
-                   .show()
-       })
+        headerViewModel.logOut(requireContext(), {}, {
+            Toast.makeText(requireContext(), R.string.error_default
+                    , Toast.LENGTH_LONG)
+                    .show()
+        })
     }
 
 }
