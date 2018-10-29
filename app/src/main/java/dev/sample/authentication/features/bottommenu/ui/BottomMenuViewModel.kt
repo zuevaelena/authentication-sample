@@ -23,6 +23,13 @@ class BottomMenuViewModel @Inject constructor(
     init {
         userData = fetchUser.execute()
 
+        /**
+         * TODO:
+         * Note: if you choose to use an AuthStateListener, make sure to unregister it before
+         * launching the FirebaseUI flow and re-register it after the flow returns.
+         * FirebaseUI performs auth operations internally which may trigger the listener
+         * before the flow is complete.
+         */
         observeAuthState.execute { userData = fetchUser.execute() }
     }
 
@@ -34,10 +41,10 @@ class BottomMenuViewModel @Inject constructor(
         return makeSignInIntent.execute()
     }
 
-    fun logOut(context: Context) {
+    fun logOut(context: Context, onSuccess: () -> Unit, onFailure: () -> Unit) {
         if (userData.value?.isLoggedIn() == false) {
             throw IllegalAccessException("Cannot log out when logged out already")
         }
-        doLogOut.execute(context)
+        return doLogOut.execute(context, onSuccess, onFailure)
     }
 }

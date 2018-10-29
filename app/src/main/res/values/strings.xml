@@ -10,4 +10,7 @@
 
     <string name="menu_content">Content</string>
     <string name="menu_user_info">User info</string>
+
+    <string name="error_no_network">No network connection</string>
+    <string name="error_default">Error occurred</string>
 </resources>
