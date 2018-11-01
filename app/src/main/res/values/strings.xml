@@ -13,4 +13,9 @@
 
     <string name="error_no_network">No network connection</string>
     <string name="error_default">Error occurred</string>
+
+    <string name="logout_confirmation_title">Logout confirmation</string>
+    <string name="logout_confirmation_message">Are you going to log out?</string>
+    <string name="logout_confirmation_yes">YES</string>
+    <string name="logout_confirmation_no">NOT NOW</string>
 </resources>

@@ -5,10 +5,10 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dev.sample.authentication.data.UserRepository
-import dev.sample.authentication.features.bottommenu.usecase.DoFirebaseLogOut
-import dev.sample.authentication.features.bottommenu.usecase.DoLogOut
 import dev.sample.authentication.features.bottommenu.usecase.FirebaseSignIn
+import dev.sample.authentication.features.bottommenu.usecase.FirebaseSignOut
 import dev.sample.authentication.features.bottommenu.usecase.SignIn
+import dev.sample.authentication.features.bottommenu.usecase.SignOut
 import dev.sample.authentication.usecases.DefaultFetchUser
 import dev.sample.authentication.usecases.FetchUser
 import dev.sample.authentication.usecases.ObserveAuthState
@@ -24,7 +24,7 @@ class BottomMenuViewModelModule {
     fun provideSignIn(authUi: AuthUI): SignIn = FirebaseSignIn(authUi)
 
     @Provides
-    fun provideLogOutDoer(authUi: AuthUI): DoLogOut = DoFirebaseLogOut(authUi)
+    fun provideSignOut(authUi: AuthUI): SignOut = FirebaseSignOut(authUi)
 
     @Provides
     fun provideUserFetcher(userRepository: UserRepository): FetchUser = DefaultFetchUser(userRepository)

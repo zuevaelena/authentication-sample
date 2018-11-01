@@ -8,7 +8,7 @@ import dev.sample.authentication.fakeobjects.FakeFetchSignedInUser
 import dev.sample.authentication.fakeobjects.FakeFetchSignedOutUser
 import dev.sample.authentication.fakeobjects.FakeSuccessSignIn
 import dev.sample.authentication.features.bottommenu.ui.BottomMenuViewModel
-import dev.sample.authentication.features.bottommenu.usecase.DoLogOut
+import dev.sample.authentication.features.bottommenu.usecase.SignOut
 import dev.sample.authentication.features.bottommenu.usecase.SignInFailure
 import dev.sample.authentication.features.bottommenu.usecase.SignInSuccess
 import dev.sample.authentication.usecases.FetchUser
@@ -33,7 +33,7 @@ class BottomMenuViewModelTest {
     private val fakeSignedInUser: FetchUser = FakeFetchSignedInUser()
     private val fakeSignedOutUser: FetchUser = FakeFetchSignedOutUser()
 
-    private val mockDoLogOut: DoLogOut = Mockito.mock(DoLogOut::class.java)
+    private val mockDoLogOut: SignOut = Mockito.mock(SignOut::class.java)
     private val mockObserveAuthState: ObserveAuthState = Mockito.mock(ObserveAuthState::class.java)
 
     private val mockContext: Context = Mockito.mock(Context::class.java)
@@ -53,8 +53,8 @@ class BottomMenuViewModelTest {
         viewModel = BottomMenuViewModel(fakeSuccessSignIn, mockDoLogOut, fakeSignedOutUser, mockObserveAuthState)
 
         try {
-            viewModel.logOut(mockContext, {}, {})
-            fail("Exception expected when logged out and calling logOut()")
+            viewModel.signOut(mockContext)
+            fail("Exception expected when logged out and calling signOut()")
 
         } catch (exception: Exception) {
             MatcherAssert.assertThat(exception is IllegalAccessException, Matchers.`is`(true))

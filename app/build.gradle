@@ -46,6 +46,7 @@ dependencies {
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.kotlinCoroutinesVersion"
 
     // firebase
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCoreVersion"

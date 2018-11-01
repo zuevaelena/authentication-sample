@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -14,6 +15,7 @@ import dev.sample.authentication.databinding.FragmentBottomSheetMenuBinding
 import dev.sample.authentication.databinding.WidgetUserCardBinding
 import dev.sample.authentication.features.bottommenu.usecase.SignInError
 import dev.sample.authentication.features.bottommenu.usecase.SignInFailure
+import dev.sample.authentication.features.bottommenu.usecase.SignOutError
 import dev.sample.authentication.ui.DaggerBottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -49,7 +51,7 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
             viewModel = headerViewModel
 
             gotoLogin.setOnClickListener { gotoLogIn() }
-            doLogout.setOnClickListener { doLogOut() }
+            doLogout.setOnClickListener { gotoLogOut() }
         }
 
         menuBinding.bottomSheetNavigation.addHeaderView(headerBinding.root)
@@ -80,6 +82,7 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
         startActivityForResult(headerViewModel.getSignInIntent(), SIGN_IN_REQUEST)
     }
 
+
     private fun processLogInResult(resultCode: Int, data: Intent?) {
         val signInResult = headerViewModel.getSignInResult(resultCode, data)
 
@@ -94,13 +97,27 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
         }
     }
 
-    // TODO move it to standalone interface in order to implement logout confirmation dialog
+    private fun gotoLogOut() {
+        AlertDialog.Builder(requireContext())
+                .setCancelable(false)
+                .setTitle(R.string.logout_confirmation_title)
+                .setMessage(R.string.logout_confirmation_message)
+                .setNegativeButton(R.string.logout_confirmation_no) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(R.string.logout_confirmation_yes) { dialog, _ ->
+                    dialog.dismiss()
+                    doLogOut()
+                }
+                .show()
+    }
+
     private fun doLogOut() {
-        headerViewModel.logOut(requireContext(), {}, {
+        val signOutResult = headerViewModel.signOut(requireContext())
+
+        if(signOutResult is SignOutError) {
             Toast.makeText(requireContext(), R.string.error_default
                     , Toast.LENGTH_LONG)
                     .show()
-        })
+        }
     }
 
 }

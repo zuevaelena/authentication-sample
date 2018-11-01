@@ -5,16 +5,17 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.entities.User
-import dev.sample.authentication.features.bottommenu.usecase.DoLogOut
+import dev.sample.authentication.features.bottommenu.usecase.SignOut
 import dev.sample.authentication.features.bottommenu.usecase.SignIn
 import dev.sample.authentication.features.bottommenu.usecase.SignInResult
+import dev.sample.authentication.features.bottommenu.usecase.SignOutResult
 import dev.sample.authentication.usecases.FetchUser
 import dev.sample.authentication.usecases.ObserveAuthState
 import javax.inject.Inject
 
 class BottomMenuViewModel @Inject constructor(
         private val signIn: SignIn
-        , private val doLogOut: DoLogOut
+        , private val doLogOut: SignOut
         , private val fetchUser: FetchUser
         , private val observeAuthState: ObserveAuthState) : ViewModel() {
 
@@ -52,10 +53,10 @@ class BottomMenuViewModel @Inject constructor(
         return signIn.processResult(resultCode, data)
     }
 
-    fun logOut(context: Context, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    fun signOut(context: Context) : SignOutResult {
         if (userData.value?.isLoggedIn() == false) {
             throw IllegalAccessException("Cannot log out when logged out already")
         }
-        return doLogOut.execute(context, onSuccess, onFailure)
+        return doLogOut.execute(context)
     }
 }
