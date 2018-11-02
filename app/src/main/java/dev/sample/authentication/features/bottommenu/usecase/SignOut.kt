@@ -1,14 +1,13 @@
 package dev.sample.authentication.features.bottommenu.usecase
 
 import android.content.Context
-import android.util.Log
 import com.firebase.ui.auth.AuthUI
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 sealed class SignOutResult
 object SignOutSuccess : SignOutResult()
@@ -24,31 +23,29 @@ class FirebaseSignOut @Inject constructor(private val firebaseAuthUi: AuthUI) : 
 
     override fun execute(context: Context): SignOutResult {
         runBlocking {
-            Log.v("start blocking", Thread.currentThread().name)
-            val job = GlobalScope.launch {
-                signOutResult = getSignOutResult(context)
+            try {
+                withTimeout(2000) {
+                    signOutResult = getSignOutResult(context)
+                }
+
+            } catch (e: TimeoutCancellationException) {
+                signOutResult = SignOutError
             }
-            job.join()
-            Log.v("end blocking", Thread.currentThread().name)
         }
 
         return signOutResult
     }
 
     private suspend fun getSignOutResult(context: Context): SignOutResult {
-        return suspendCoroutine { continuation ->
-            Log.v("blocking continue 2", Thread.currentThread().name)
+        return suspendCancellableCoroutine { continuation ->
             firebaseAuthUi.signOut(context)
                     .addOnSuccessListener {
-                        Log.v("should end blocking 1", Thread.currentThread().name)
                         continuation.resume(SignOutSuccess)
                     }
                     .addOnFailureListener {
-                        Log.v("should end blocking 2", Thread.currentThread().name)
                         continuation.resume(SignOutError)
                     }
                     .addOnCanceledListener {
-                        Log.v("should end blocking 3", Thread.currentThread().name)
                         continuation.resume(SignOutCancel)
                     }
         }
