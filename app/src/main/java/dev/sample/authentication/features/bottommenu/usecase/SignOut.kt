@@ -1,12 +1,14 @@
 package dev.sample.authentication.features.bottommenu.usecase
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.firebase.ui.auth.AuthUI
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 
 sealed class SignOutResult
@@ -15,40 +17,28 @@ object SignOutError : SignOutResult()
 object SignOutCancel : SignOutResult()
 
 interface SignOut {
-    fun execute(context: Context): SignOutResult
+    fun trigger(context: Context)
+    fun getResult(): LiveData<SignOutResult>
 }
 
 class FirebaseSignOut @Inject constructor(private val firebaseAuthUi: AuthUI) : SignOut {
-    private lateinit var signOutResult: SignOutResult
+    private var signOutResult: MutableLiveData<SignOutResult> = MutableLiveData()
 
-    override fun execute(context: Context): SignOutResult {
-        runBlocking {
-            try {
-                withTimeout(2000) {
-                    signOutResult = getSignOutResult(context)
+    override fun trigger(context: Context) {
+        firebaseAuthUi.signOut(context)
+                .addOnSuccessListener {
+                    signOutResult.postValue(SignOutSuccess)
                 }
-
-            } catch (e: TimeoutCancellationException) {
-                signOutResult = SignOutError
-            }
-        }
-
-        return signOutResult
+                .addOnFailureListener {
+                    signOutResult.postValue(SignOutError)
+                }
+                .addOnCanceledListener {
+                    signOutResult.postValue(SignOutCancel)
+                }
     }
 
-    private suspend fun getSignOutResult(context: Context): SignOutResult {
-        return suspendCancellableCoroutine { continuation ->
-            firebaseAuthUi.signOut(context)
-                    .addOnSuccessListener {
-                        continuation.resume(SignOutSuccess)
-                    }
-                    .addOnFailureListener {
-                        continuation.resume(SignOutError)
-                    }
-                    .addOnCanceledListener {
-                        continuation.resume(SignOutCancel)
-                    }
-        }
+    override fun getResult(): LiveData<SignOutResult> {
+        return signOutResult
     }
 
 }

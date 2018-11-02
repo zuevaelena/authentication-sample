@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dev.sample.authentication.R
@@ -16,6 +17,7 @@ import dev.sample.authentication.databinding.WidgetUserCardBinding
 import dev.sample.authentication.features.bottommenu.usecase.SignInError
 import dev.sample.authentication.features.bottommenu.usecase.SignInFailure
 import dev.sample.authentication.features.bottommenu.usecase.SignOutError
+import dev.sample.authentication.features.bottommenu.usecase.SignOutResult
 import dev.sample.authentication.ui.DaggerBottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -32,6 +34,8 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
     private lateinit var headerViewModel: BottomMenuViewModel
     private lateinit var menuBinding: FragmentBottomSheetMenuBinding
     private lateinit var headerBinding: WidgetUserCardBinding
+
+    private var signOutObserver: Observer<SignOutResult> = Observer { result -> processLogOutResult(result) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         menuBinding = DataBindingUtil.inflate(inflater
@@ -53,6 +57,8 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
             gotoLogin.setOnClickListener { gotoLogIn() }
             doLogout.setOnClickListener { gotoLogOut() }
         }
+
+        headerViewModel.signoutData.observe(this, signOutObserver)
 
         menuBinding.bottomSheetNavigation.addHeaderView(headerBinding.root)
 
@@ -111,8 +117,12 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
     }
 
     private fun doLogOut() {
-        val signOutResult = headerViewModel.signOut(requireContext())
+        headerViewModel.signOut(requireContext())
 
+
+    }
+
+    private fun processLogOutResult(signOutResult: SignOutResult) {
         if(signOutResult is SignOutError) {
             Toast.makeText(requireContext(), R.string.error_default
                     , Toast.LENGTH_LONG)
@@ -121,3 +131,4 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
     }
 
 }
+
