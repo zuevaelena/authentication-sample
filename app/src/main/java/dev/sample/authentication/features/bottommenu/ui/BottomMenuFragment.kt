@@ -103,6 +103,7 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
         }
     }
 
+    // TODO implement full screen preloader on logout
     private fun gotoLogOut() {
         AlertDialog.Builder(requireContext())
                 .setCancelable(false)
@@ -111,15 +112,9 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
                 .setNegativeButton(R.string.logout_confirmation_no) { dialog, _ -> dialog.dismiss() }
                 .setPositiveButton(R.string.logout_confirmation_yes) { dialog, _ ->
                     dialog.dismiss()
-                    doLogOut()
+                    headerViewModel.signOut(requireContext())
                 }
                 .show()
-    }
-
-    private fun doLogOut() {
-        headerViewModel.signOut(requireContext())
-
-
     }
 
     private fun processLogOutResult(signOutResult: SignOutResult) {
