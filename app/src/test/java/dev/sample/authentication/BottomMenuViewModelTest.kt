@@ -107,7 +107,7 @@ class BottomMenuViewModelTest {
     fun whenLoggedIn_successfullyLogOut_returnSuccessResult() {
         viewModel = BottomMenuViewModel(mockSignIn, fakeSuccessSignOut, fakeSignedInUser, mockObserveAuthState)
 
-        viewModel.signOut(mockContext);
+        viewModel.signOut(mockContext)
 
         val signOutData = viewModel.signoutData
         MatcherAssert.assertThat(signOutData.value is SignOutSuccess, Matchers.`is`(true))
@@ -117,7 +117,7 @@ class BottomMenuViewModelTest {
     fun whenDoingLogOut_gettingError_returnErrorResult() {
         viewModel = BottomMenuViewModel(mockSignIn, fakeFailureSignOut, fakeSignedInUser, mockObserveAuthState)
 
-        viewModel.signOut(mockContext);
+        viewModel.signOut(mockContext)
 
         val signOutData = viewModel.signoutData
         MatcherAssert.assertThat(signOutData.value is SignOutError, Matchers.`is`(true))
