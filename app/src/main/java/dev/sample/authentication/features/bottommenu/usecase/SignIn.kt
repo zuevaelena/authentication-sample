@@ -5,6 +5,7 @@ import android.content.Intent
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
+import dev.sample.authentication.R
 import javax.inject.Inject
 
 enum class SignInError {
@@ -31,6 +32,7 @@ class FirebaseSignIn @Inject constructor(private val firebaseAuthUi: AuthUI) : S
         return firebaseAuthUi
                 .createSignInIntentBuilder()
                 .setAvailableProviders(authenticationProviders)
+                .setTheme(R.style.AppTheme)
                 .build()
     }
 

@@ -22,11 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:backgroundTint="@color/primaryDarkColor"
             app:hideOnScroll="true"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="@drawable/ic_drawer_menu"
-            app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+            app:navigationIcon="@drawable/ic_drawer_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
