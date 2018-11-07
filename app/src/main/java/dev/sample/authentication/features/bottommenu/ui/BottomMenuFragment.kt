@@ -44,21 +44,16 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
                 , false)
         menuBinding.setLifecycleOwner(this)
 
+        headerViewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomMenuViewModel::class.java)
+        headerViewModel.signoutData.observe(this, signOutObserver)
+
         headerBinding = DataBindingUtil.inflate(inflater
                 , R.layout.widget_user_card
                 , menuBinding.root as ViewGroup
                 , false)
         headerBinding.setLifecycleOwner(this)
-
-        headerViewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomMenuViewModel::class.java)
-        headerBinding.apply {
-            viewModel = headerViewModel
-
-            gotoLogin.setOnClickListener { gotoLogIn() }
-            doLogout.setOnClickListener { gotoLogOut() }
-        }
-
-        headerViewModel.signoutData.observe(this, signOutObserver)
+        headerBinding.viewModel = headerViewModel
+        bindHeaderButtonsClicks()
 
         menuBinding.bottomSheetNavigation.addHeaderView(headerBinding.root)
 
@@ -84,7 +79,18 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
         }
     }
 
+    private fun bindHeaderButtonsClicks() {
+        headerBinding.gotoLogin.setOnClickListener { gotoLogIn() }
+        headerBinding.doLogout.setOnClickListener { gotoLogOut() }
+    }
+
+    private fun unbindHeaderButtonsClicks() {
+        headerBinding.gotoLogin.setOnClickListener { }
+        headerBinding.doLogout.setOnClickListener { }
+    }
+
     private fun gotoLogIn() {
+        unbindHeaderButtonsClicks()
         startActivityForResult(headerViewModel.getSignInIntent(), SIGN_IN_REQUEST)
     }
 
@@ -101,15 +107,21 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
                     , Toast.LENGTH_LONG)
                     .show()
         }
+
+        bindHeaderButtonsClicks()
     }
 
-    // TODO implement full screen preloader on logout
     private fun gotoLogOut() {
+        unbindHeaderButtonsClicks()
+
         AlertDialog.Builder(requireContext())
                 .setCancelable(false)
                 .setTitle(R.string.logout_confirmation_title)
                 .setMessage(R.string.logout_confirmation_message)
-                .setNegativeButton(R.string.logout_confirmation_no) { dialog, _ -> dialog.dismiss() }
+                .setNegativeButton(R.string.logout_confirmation_no) { dialog, _ ->
+                    dialog.dismiss()
+                    bindHeaderButtonsClicks()
+                }
                 .setPositiveButton(R.string.logout_confirmation_yes) { dialog, _ ->
                     dialog.dismiss()
                     headerViewModel.signOut(requireContext())
@@ -123,6 +135,7 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
                     , Toast.LENGTH_LONG)
                     .show()
         }
+        bindHeaderButtonsClicks()
     }
 
 }
