@@ -3,7 +3,7 @@ of the project is practicing Clean Architecture implementation and related tools
 
 # Implemented stuff
 - Kotlin as a main language
-- MVVM architecure pattern
-- Dependency Injection princilpe via Dagger2
-- FirebaseAuthenticaton for user identifiction
+- MVVM architecture pattern
+- Dependency Injection principle via Dagger2
+- FirebaseAuthentication for user identification
 - BottomSheetDialogFragment as a menu
