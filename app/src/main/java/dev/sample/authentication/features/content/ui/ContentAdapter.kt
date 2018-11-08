@@ -1,17 +1,12 @@
 package dev.sample.authentication.features.content.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import dev.sample.authentication.R
+import dev.sample.authentication.databinding.ItemContentNewsListBinding
 import dev.sample.authentication.entities.News
-import kotlinx.android.synthetic.main.item_content_news_list.view.description
-import kotlinx.android.synthetic.main.item_content_news_list.view.photo
-import kotlinx.android.synthetic.main.item_content_news_list.view.publish_date
-import kotlinx.android.synthetic.main.item_content_news_list.view.title
 
 class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -32,11 +27,12 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return NewsItemViewHolder(LayoutInflater.from(parent.context).inflate(
-                R.layout.item_content_news_list
+        val bind: ItemContentNewsListBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context)
+                , R.layout.item_content_news_list
                 , parent
-                , false
-        ))
+                , false)
+        return NewsItemViewHolder(bind)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -45,18 +41,9 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class NewsItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun attachData(news: News) {
-            view.title.text = news.title
-            view.description.text = news.description
-            view.publish_date.text = news.publishedAt.toString()
-
-            Glide.with(view.context)
-                    .setDefaultRequestOptions(RequestOptions().apply {
-                        centerCrop()
-                    })
-                    .load(news.imageUri)
-                    .into(view.photo)
+    class NewsItemViewHolder(private val binding: ItemContentNewsListBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun attachData(item: News) {
+            binding.newsItem = item
         }
     }
 }

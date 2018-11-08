@@ -1,57 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/ContentList.Item"
-    android:layout_marginTop="@dimen/half_default_vertical_margin"
-    android:layout_marginEnd="@dimen/half_default_horizontal_margin"
-    android:layout_marginStart="@dimen/half_default_horizontal_margin">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
+    <data>
+        <variable
+            name="newsItem"
+            type="dev.sample.authentication.entities.News" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ContentList.Title"
-        app:layout_constraintBottom_toTopOf="@+id/description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        style="@style/ContentList.Item"
+        android:layout_marginTop="@dimen/half_default_vertical_margin"
+        android:layout_marginEnd="@dimen/half_default_horizontal_margin"
+        android:layout_marginStart="@dimen/half_default_horizontal_margin">
 
-    <TextView
-        android:id="@id/description"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        style="@style/ContentList.Description"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintEnd_toStartOf="@+id/photo"
-        app:layout_constraintBottom_toTopOf="@+id/publish_date"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/ContentList.Title"
+            android:text="@{newsItem.title}"
+            app:layout_constraintBottom_toTopOf="@+id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-    <TextView
-        android:id="@id/publish_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        style="@style/ContentList.Date"
-        app:layout_constraintTop_toBottomOf="@id/description"
-        app:layout_constraintEnd_toEndOf="@id/description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/description"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        <TextView
+            android:id="@id/description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            style="@style/ContentList.Description"
+            android:text="@{newsItem.description}"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintEnd_toStartOf="@+id/photo"
+            app:layout_constraintBottom_toTopOf="@+id/publish_date"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-    <ImageView
-        android:id="@id/photo"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/content_item_photo_height"
-        style="@style/ContentList.Photo"
-        app:layout_constraintTop_toTopOf="@id/description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/description"
-        app:layout_constraintWidth_percent="0.4"
-        android:layout_marginStart="@dimen/half_default_horizontal_margin"/>
+        <TextView
+            android:id="@id/publish_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/ContentList.Date"
+            android:text="@{newsItem.publishedAt.toString()}"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            app:layout_constraintEnd_toEndOf="@id/description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/description"
+            app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@id/photo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/content_item_photo_height"
+            style="@style/ContentList.Photo"
+            imageUrl="@{newsItem.imageUri}"
+            app:layout_constraintTop_toTopOf="@id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/description"
+            app:layout_constraintWidth_percent="0.4"
+            android:layout_marginStart="@dimen/half_default_horizontal_margin"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
