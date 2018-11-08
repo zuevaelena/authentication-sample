@@ -22,7 +22,7 @@ class ContentActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(FRAGMENT_CONTAINER, ContentFragment.newInstance())
+                .replace(FRAGMENT_CONTAINER, ContentFragment())
                 .commit()
     }
 
