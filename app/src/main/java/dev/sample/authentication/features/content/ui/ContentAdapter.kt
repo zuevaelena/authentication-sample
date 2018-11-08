@@ -53,7 +53,6 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             Glide.with(view.context)
                     .setDefaultRequestOptions(RequestOptions().apply {
-                        error(R.drawable.ic_account_circle)
                         centerCrop()
                     })
                     .load(news.imageUri)
