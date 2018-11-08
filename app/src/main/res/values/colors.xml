@@ -3,6 +3,7 @@
     <color name="primaryColor">#80cbc4</color>
     <color name="primaryLightColor">#b2fef7</color>
     <color name="primaryDarkColor">#4f9a94</color>
+    <color name="primaryGrey">#eaefee</color>
     <color name="secondaryColor">#e57373</color>
     <color name="secondaryLightColor">#fe9595</color>
     <color name="secondaryDarkColor">#b53f3f</color>

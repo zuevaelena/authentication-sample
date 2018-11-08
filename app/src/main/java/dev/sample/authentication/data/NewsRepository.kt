@@ -17,11 +17,11 @@ class NewsApiRepository : NewsRepository {
     private val mockList: List<News> = ArrayList<News>().apply {
         add(News( NewsSource("cnn", "CNN")
                 , "White House pulls CNN's Jim Acosta's pass after contentious news conference"
-                , ""
+                , "test"
                 , Date() ))
         add(News( NewsSource("", "Startribune.com")
                 , "In Wisconsin, Walker falls to lingering resentments and fresh impatience"
-                , "Follow the StarTribune for the news, photos and videos from the Twin Cities and beyond."
+                , "Follow the StarTribune for the news, photos and videos from the Twin Cities and beyond. From the Twin Cities and beyond."
                 , Date()
                 , "Rochelle Olson"
                 , Uri.parse("http://stmedia.stimg.co/Walker14.JPG?h=630&w=1200&fit=crop&bg=999&crop=faces") ))

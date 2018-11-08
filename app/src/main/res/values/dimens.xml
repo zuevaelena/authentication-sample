@@ -7,7 +7,10 @@
     <dimen name="half_default_horizontal_margin">8dp</dimen>
 
     <dimen name="bottom_menu_corner_radius">@dimen/default_vertical_margin</dimen>
+    <dimen name="content_list_item_corner_radius">@dimen/half_default_vertical_margin</dimen>
 
     <dimen name="user_card_margin">16dp</dimen>
     <dimen name="user_photo_width">56dp</dimen>
+
+    <dimen name="content_item_photo_height">100dp</dimen>
 </resources>

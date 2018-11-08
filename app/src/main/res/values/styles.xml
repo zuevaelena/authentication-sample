@@ -31,4 +31,31 @@
         <item name="android:textAppearance">?textAppearanceSubtitle1</item>
     </style>
 
+    <style name="ContentList" />
+
+    <style name="ContentList.Item">
+        <item name="android:background">@drawable/bg_content_list_news_item</item>
+        <item name="android:paddingTop">@dimen/half_default_vertical_margin</item>
+        <item name="android:paddingEnd">@dimen/half_default_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/half_default_vertical_margin</item>
+        <item name="android:paddingStart">@dimen/half_default_horizontal_margin</item>
+    </style>
+
+    <style name="ContentList.Title">
+        <item name="android:textAppearance">?textAppearanceHeadline6</item>
+        <item name="android:paddingBottom">@dimen/half_default_vertical_margin</item>
+        <item name="android:fontFamily">@font/cabin_bold</item>
+    </style>
+
+    <style name="ContentList.Description">
+        <item name="android:textAppearance">?textAppearanceListItem</item>
+    </style>
+
+    <style name="ContentList.Date">
+        <item name="android:textAppearance">?textAppearanceCaption</item>
+        <item name="android:paddingTop">@dimen/half_default_vertical_margin</item>
+    </style>
+
+    <style name="ContentList.Photo" />
+
 </resources>
