@@ -37,6 +37,8 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
 
     private var signOutObserver: Observer<SignOutResult> = Observer { result -> processLogOutResult(result) }
 
+    override fun getTheme(): Int = R.style.BottomMenu
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         menuBinding = DataBindingUtil.inflate(inflater
                 , R.layout.fragment_bottom_sheet_menu

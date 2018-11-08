@@ -1,13 +1,21 @@
 <resources>
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorAccent">@color/accentColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="android:statusBarColor">@color/primaryDarkColor</item>
     </style>
 
+    <style name="BottomMenuDialog" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet_menu</item>
+    </style>
+
+    <style name="BottomMenu" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomMenuDialog</item>
+    </style>
+
     <style name="ActionButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@color/accentColor</item>
+        <item name="android:backgroundTint">@color/secondaryColor</item>
     </style>
 
     <style name="WelcomeMessage">
