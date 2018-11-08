@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/ContentList.Item"
-    android:layout_marginEnd="@dimen/default_horizontal_margin"
-    android:layout_marginBottom="@dimen/default_vertical_margin"
-    android:layout_marginStart="@dimen/default_horizontal_margin">
+    android:layout_marginTop="@dimen/half_default_vertical_margin"
+    android:layout_marginEnd="@dimen/half_default_horizontal_margin"
+    android:layout_marginStart="@dimen/half_default_horizontal_margin">
 
     <TextView
         android:id="@+id/title"
