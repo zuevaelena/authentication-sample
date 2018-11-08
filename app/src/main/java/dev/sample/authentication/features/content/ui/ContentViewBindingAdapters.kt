@@ -1,18 +1,13 @@
 package dev.sample.authentication.features.content.ui
 
-import android.net.Uri
-import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import androidx.recyclerview.widget.RecyclerView
+import dev.sample.authentication.entities.News
 
-@BindingAdapter("imageUrl", "errorDrawable")
-fun loadImage(imageView: ImageView, uri: Uri?, errorReplace: Int) {
-    Glide.with(imageView.context)
-            .setDefaultRequestOptions(RequestOptions().apply {
-                error(errorReplace)
-                circleCrop()
-            })
-            .load(uri ?: Uri.EMPTY)
-            .into(imageView)
+
+@BindingAdapter("items", requireAll = false)
+fun bindItems(recyclerView: RecyclerView, items: List<News>? = null) {
+    if(items == null) return
+
+    (recyclerView.adapter as ContentAdapter).loadNews(items)
 }

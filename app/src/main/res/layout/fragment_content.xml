@@ -5,8 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="dev.sample.authentication.R" />
-
         <variable
             name="viewModel"
             type="dev.sample.authentication.features.content.ui.ContentViewModel" />
@@ -21,7 +19,8 @@
             android:id="@+id/content_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/default_vertical_margin"
+            android:layout_marginTop="@dimen/default_vertical_margin"
+            app:items="@{viewModel.newsData}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
