@@ -10,7 +10,7 @@ import dev.sample.authentication.entities.News
 
 class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        private const val NEWS_ITEM = 1;
+        private const val NEWS_ITEM = 1
     }
 
     private var listNews: List<News> = emptyList()

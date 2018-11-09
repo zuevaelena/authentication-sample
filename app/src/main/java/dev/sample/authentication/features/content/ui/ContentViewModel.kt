@@ -14,7 +14,7 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(
         private val fetchUser: FetchUser
-        , private val fetchPage: FetchPage
+        , fetchPage: FetchPage
         , observeAuthState: ObserveAuthState) : ViewModel() {
 
     var userData: LiveData<User>
