@@ -5,19 +5,31 @@ import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.entities.User
-import dev.sample.authentication.features.bottommenu.usecase.SignOut
 import dev.sample.authentication.features.bottommenu.usecase.SignIn
 import dev.sample.authentication.features.bottommenu.usecase.SignInResult
+import dev.sample.authentication.features.bottommenu.usecase.SignOut
+import dev.sample.authentication.features.bottommenu.usecase.SignOutError
 import dev.sample.authentication.features.bottommenu.usecase.SignOutResult
 import dev.sample.authentication.usecases.FetchUser
 import dev.sample.authentication.usecases.ObserveAuthState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class BottomMenuViewModel @Inject constructor(
         private val signIn: SignIn
         , private val doLogOut: SignOut
         , private val fetchUser: FetchUser
-        , private val observeAuthState: ObserveAuthState) : ViewModel() {
+        , private val observeAuthState: ObserveAuthState) : ViewModel(), CoroutineScope {
+
+    private val job: Job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     private val onAuthStateAction = { userData = fetchUser.execute() }
 
@@ -28,6 +40,11 @@ class BottomMenuViewModel @Inject constructor(
         userData = fetchUser.execute()
 
         observeAuthState.start(onAuthStateAction)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 
     fun getSignInIntent(): Intent {
@@ -53,10 +70,19 @@ class BottomMenuViewModel @Inject constructor(
         return signIn.processResult(resultCode, data)
     }
 
-    fun signOut(context: Context) : SignOutResult {
+    fun signOut(context: Context): SignOutResult {
         if (userData.value?.isLoggedIn() == false) {
             throw IllegalAccessException("Cannot log out when logged out already")
         }
-        return doLogOut.execute(context)
+
+        return runBlocking {
+            try {
+                withTimeout(2000) {
+                    return@withTimeout doLogOut.execute(context)
+                }
+            } catch (e: TimeoutCancellationException) {
+                SignOutError
+            }
+        }
     }
 }
