@@ -62,6 +62,14 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
 
+    // networking
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+    implementation ("com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion") {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitGsonConverterVersion"
 
     // unit tests
     testImplementation "junit:junit:$rootProject.junitVersion"

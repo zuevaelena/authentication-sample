@@ -4,11 +4,12 @@ import android.net.Uri
 import java.util.Date
 
 data class News(
-        val source: NewsSource,
+        //val source: NewsSource, // TODO put news source data back
         val title: String,
         val description: String,
         val publishedAt: Date,
         val author: String = "",
-        val imageUri: Uri = Uri.EMPTY,
-        val content: String = ""
-)
+        val urlToImage: String = "",
+        val content: String = "") {
+    fun imageUri(): Uri = Uri.parse(urlToImage ?: "") ?: Uri.EMPTY
+}
