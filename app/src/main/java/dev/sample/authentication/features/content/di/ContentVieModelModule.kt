@@ -50,8 +50,7 @@ class ContentViewModelModule {
             .build()
 
     @Provides
-    fun provideRemoteNewsRepository(retrofit: Retrofit): RemoteNewsRepository = RemoteNewsRepository(retrofit.create(NewsApiService::class.java)
-    )
+    fun provideRemoteNewsRepository(retrofit: Retrofit): RemoteNewsRepository = RemoteNewsRepository(retrofit.create(NewsApiService::class.java))
 
     @Provides
     fun provideNewsRepository(remoteRepository: RemoteNewsRepository): NewsRepository = DefaultNewsRepository(remoteRepository)

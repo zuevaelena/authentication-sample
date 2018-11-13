@@ -1,18 +1,16 @@
 package dev.sample.authentication.data.remote
 
 import dev.sample.authentication.entities.News
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 class RemoteNewsRepository @Inject constructor(private val retrofitService: NewsApiService) {
-    fun getPage(): List<News> {
-        var result: List<News> = emptyList()
-        runBlocking(Dispatchers.IO) {
-            // TODO handle errors
-            result = retrofitService.getPage().execute().body()?.articles ?: emptyList()
-        }
 
-        return result
+    // TODO handle network errors
+    suspend fun getPage(): List<News> {
+        return GlobalScope.async {
+            retrofitService.getPage().execute().body()?.articles ?: emptyList()
+        }.await()
     }
 }

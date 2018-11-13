@@ -20,17 +20,11 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val NEWS_ITEM = 3
     }
 
-    private var initialLoadInProcess: Boolean = false
+    private var initialLoadInProcess: Boolean = true
     private var listNews: List<News> = emptyList()
 
-    fun dataWaitingMode() {
-        initialLoadInProcess = true
-
-        notifyDataSetChanged()
-    }
-
     fun resetNews(list: List<News>) {
-        if(list.isNotEmpty()) initialLoadInProcess = false
+        initialLoadInProcess = false
 
         listNews = list
         notifyDataSetChanged()

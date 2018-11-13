@@ -11,12 +11,9 @@ import dev.sample.authentication.entities.News
 
 @BindingAdapter("items", requireAll = false)
 fun bindItems(recyclerView: RecyclerView, items: List<News>? = null) {
-    if(items == null) {
-        return
+    if(items == null) return
 
-    } else {
-        (recyclerView.adapter as ContentAdapter).resetNews(items)
-    }
+    (recyclerView.adapter as ContentAdapter).resetNews(items)
 }
 
 @BindingAdapter("imageUrl")

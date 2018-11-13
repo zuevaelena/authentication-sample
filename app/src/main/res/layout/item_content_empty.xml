@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_content"
+        android:textAppearance="?textAppearanceListItem"
         android:paddingTop="@dimen/half_default_vertical_margin"
         app:layout_constraintTop_toBottomOf="@id/empty_image"
         app:layout_constraintEnd_toEndOf="parent"
