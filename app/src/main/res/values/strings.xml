@@ -18,4 +18,6 @@
     <string name="logout_confirmation_message">Are you going to log out?</string>
     <string name="logout_confirmation_yes">YES</string>
     <string name="logout_confirmation_no">NOT NOW</string>
+
+    <string name="empty_content">No news so far</string>
 </resources>

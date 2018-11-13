@@ -90,7 +90,6 @@ class DefaultNewsRepository @Inject constructor(val remoteRepository: RemoteNews
     }
 
     override fun getPage(): LiveData<List<News>> {
-        //observableData.apply { postValue(mockList) }
         observableData.apply { postValue(remoteRepository.getPage()) }
 
         return observableData

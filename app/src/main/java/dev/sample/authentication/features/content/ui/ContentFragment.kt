@@ -26,6 +26,12 @@ class ContentFragment : DaggerFragment() {
     private lateinit var binding: FragmentContentBinding
     private lateinit var adapter: ContentAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContentViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_content, container, false)
@@ -36,7 +42,6 @@ class ContentFragment : DaggerFragment() {
         binding.contentList.layoutManager = LinearLayoutManager(requireContext())
         binding.contentList.adapter = adapter
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ContentViewModel::class.java)
         binding.viewModel = viewModel
 
         return binding.root
