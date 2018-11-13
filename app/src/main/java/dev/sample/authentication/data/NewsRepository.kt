@@ -54,6 +54,7 @@ class DefaultNewsRepository @Inject constructor(val remoteRepository: RemoteNews
     }
 
     override fun getPage(): LiveData<List<News>> {
+        // TODO reconsider using of GlobalScope
         GlobalScope.launch {
             observableData.postValue(remoteRepository.getPage())
         }

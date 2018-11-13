@@ -23,6 +23,13 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var initialLoadInProcess: Boolean = true
     private var listNews: List<News> = emptyList()
 
+    fun initialMode() {
+        initialLoadInProcess = true
+
+        listNews = emptyList()
+        notifyDataSetChanged()
+    }
+
     fun resetNews(list: List<News>) {
         initialLoadInProcess = false
 

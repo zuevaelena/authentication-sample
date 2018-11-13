@@ -14,21 +14,29 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(
         private val fetchUser: FetchUser
-        , fetchPage: FetchPage
+        , private val fetchPage: FetchPage
         , observeAuthState: ObserveAuthState) : ViewModel() {
 
-    var userData: LiveData<User>
+    lateinit var userData: LiveData<User>
         private set
 
-    var newsData: LiveData<List<News>>
+    lateinit var newsData: LiveData<List<News>>
         private set
 
 
     init {
-        userData = fetchUser.execute()
-        newsData = fetchPage.execute()
+        requestUserDataRefresh()
+        requestPageRefresh()
 
-        observeAuthState.start { userData = fetchUser.execute() }
+        observeAuthState.start { requestUserDataRefresh() }
+    }
+
+    fun requestUserDataRefresh() {
+        userData = fetchUser.execute()
+    }
+
+    fun requestPageRefresh() {
+        newsData = fetchPage.execute()
     }
 
 }
