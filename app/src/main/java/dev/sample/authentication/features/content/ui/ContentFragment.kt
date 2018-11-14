@@ -18,6 +18,9 @@ import javax.inject.Inject
 
 /**
  * UI-controller of Content screen.
+ *
+ * Implementing [DaggerFragment] in order to use injections, which are defined at
+ * [dev.sample.authentication.di.fragment.FragmentBindingModule]#bindContentFragment
  */
 class ContentFragment : DaggerFragment() {
 

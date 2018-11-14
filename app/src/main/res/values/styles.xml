@@ -49,6 +49,8 @@
 
     <style name="ContentList.Description">
         <item name="android:textAppearance">?textAppearanceListItem</item>
+        <item name="android:lines">3</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="ContentList.Date">
