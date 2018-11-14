@@ -9,9 +9,9 @@ class RemoteNewsRepository @Inject constructor(private val retrofitService: News
 
     // TODO handle network errors
     // TODO reconsider using of GlobalScope
-    suspend fun getPage(): List<News> {
+    suspend fun getPage(page: Int, perPage: Int): List<News> {
         return GlobalScope.async {
-            retrofitService.getPage().execute().body()?.articles ?: emptyList()
+            retrofitService.getPage(page, perPage).execute().body()?.articles ?: emptyList()
         }.await()
     }
 }

@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentContentBinding
@@ -73,7 +72,7 @@ class ContentFragment : DaggerFragment() {
         binding.refresher.setOnRefreshListener {
             if(adapter.isDataEmpty()) adapter.initialMode()
 
-            binding.viewModel?.requestPageRefresh()
+            binding.viewModel?.refreshNewsData()
         }
     }
 

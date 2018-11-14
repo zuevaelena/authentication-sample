@@ -12,7 +12,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.List
 
 interface NewsRepository {
-    fun getPage(): LiveData<List<News>>
+    fun getPage(page: Int, perPage: Int): LiveData<List<News>>
 }
 
 class DefaultNewsRepository @Inject constructor(val remoteRepository: RemoteNewsRepository) : NewsRepository {
@@ -53,10 +53,10 @@ class DefaultNewsRepository @Inject constructor(val remoteRepository: RemoteNews
 
     }
 
-    override fun getPage(): LiveData<List<News>> {
+    override fun getPage(page: Int, perPage: Int): LiveData<List<News>> {
         // TODO reconsider using of GlobalScope
         GlobalScope.launch {
-            observableData.postValue(remoteRepository.getPage())
+            observableData.postValue(remoteRepository.getPage(page, perPage))
         }
 
         return observableData

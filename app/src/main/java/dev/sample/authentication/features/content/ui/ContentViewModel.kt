@@ -17,6 +17,13 @@ class ContentViewModel @Inject constructor(
         , private val fetchPage: FetchPage
         , observeAuthState: ObserveAuthState) : ViewModel() {
 
+    companion object {
+        private const val FIRST_PAGE_NUMBER = 1
+        private const val ITEMS_PER_PAGE = 25
+    }
+
+    private var currentPage: Int = FIRST_PAGE_NUMBER
+
     lateinit var userData: LiveData<User>
         private set
 
@@ -25,18 +32,28 @@ class ContentViewModel @Inject constructor(
 
 
     init {
-        requestUserDataRefresh()
-        requestPageRefresh()
+        refreshUserData()
+        refreshNewsData()
 
-        observeAuthState.start { requestUserDataRefresh() }
+        observeAuthState.start { refreshUserData() }
     }
 
-    fun requestUserDataRefresh() {
+    fun refreshUserData() {
         userData = fetchUser.execute()
     }
 
-    fun requestPageRefresh() {
-        newsData = fetchPage.execute()
+    fun refreshNewsData() {
+        currentPage = FIRST_PAGE_NUMBER
+        loadCurrentPageNewsData()
+    }
+
+    fun newsNextPage() {
+        currentPage++
+        loadCurrentPageNewsData()
+    }
+
+    private fun loadCurrentPageNewsData() {
+        newsData = fetchPage.execute(currentPage, ITEMS_PER_PAGE)
     }
 
 }
