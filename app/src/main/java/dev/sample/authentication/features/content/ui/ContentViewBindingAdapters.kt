@@ -21,8 +21,11 @@ fun bindItems(recyclerView: RecyclerView, items: List<News>? = null) {
     (recyclerView.adapter as ContentAdapter).resetNews(items)
 }
 
+// TODO consider to use okhttp to load images
 @BindingAdapter("imageUrl")
 fun loadImage(imageView: ImageView, uri: Uri?) {
+
+    // TODO implement better placeholder
     val circularProgressDrawable = CircularProgressDrawable(imageView.context).apply {
         setColorSchemeColors(R.color.primaryDarkColor)
         strokeWidth = 5f
