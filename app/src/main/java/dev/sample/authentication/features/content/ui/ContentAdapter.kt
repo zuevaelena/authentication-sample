@@ -11,6 +11,7 @@ import dev.sample.authentication.databinding.ItemContentNewsListBinding
 import dev.sample.authentication.entities.News
 import java.lang.IllegalArgumentException
 
+
 class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val INITIAL_ITEMS_COUNT = 1
@@ -19,36 +20,57 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val PRELOADER_ITEM = 1
         private const val EMPTY_ITEM = 2
         private const val NEWS_ITEM = 3
+        private const val PAGING_ITEM = 4
     }
 
     private var initialLoadInProcess: Boolean = true
-    private var listNews: List<News> = emptyList()
+    private var pagingInProcess: Boolean = false
+
+    private var listNews: MutableList<News> = mutableListOf()
 
     fun isDataEmpty() : Boolean = listNews.isEmpty()
 
     fun initialMode() {
         initialLoadInProcess = true
 
-        listNews = emptyList()
+        listNews = mutableListOf()
+        notifyDataSetChanged()
+    }
+
+    fun togglePaging(inProcess: Boolean) {
+        pagingInProcess = inProcess
+
         notifyDataSetChanged()
     }
 
     fun resetNews(list: List<News>) {
-        initialLoadInProcess = false
+        if(initialLoadInProcess) initialLoadInProcess = false
 
-        listNews = list
+        listNews.apply {
+            clear()
+            addAll(list)
+        }
         notifyDataSetChanged()
+    }
+
+    fun addItems(list: List<News>) {
+        if(initialLoadInProcess) initialLoadInProcess = false
+
+        val positionStart = itemCount - 1
+        listNews.addAll(list)
+        notifyItemRangeInserted(positionStart, list.size)
     }
 
     override fun getItemCount(): Int = when {
         initialLoadInProcess -> INITIAL_ITEMS_COUNT
         listNews.isEmpty() -> EMPTY_ITEMS_COUNT
-        else -> listNews.size
+        else -> listNews.size + ( if(pagingInProcess) 1 else 0 )
     }
 
     override fun getItemViewType(position: Int): Int = when {
         initialLoadInProcess -> PRELOADER_ITEM
         listNews.isEmpty() -> EMPTY_ITEM
+        pagingInProcess && position == listNews.size -> PAGING_ITEM
         else -> NEWS_ITEM
     }
 
@@ -56,6 +78,7 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         PRELOADER_ITEM -> PreloaderViewHolder(PreloaderViewHolder.createView(parent))
         EMPTY_ITEM -> EmptyViewHolder(EmptyViewHolder.createView(parent))
         NEWS_ITEM -> NewsItemViewHolder(NewsItemViewHolder.createBinding(parent))
+        PAGING_ITEM -> PagingViewHolder(PagingViewHolder.createView(parent))
         else -> throw IllegalArgumentException("Unknown view holder type = $viewType")
     }
 
@@ -99,6 +122,14 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun attachData(item: News) {
             binding.newsItem = item
+        }
+    }
+
+    class PagingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        companion object {
+            fun createView(parent: ViewGroup) : View =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_content_paging
+                            , parent, false)
         }
     }
 }
