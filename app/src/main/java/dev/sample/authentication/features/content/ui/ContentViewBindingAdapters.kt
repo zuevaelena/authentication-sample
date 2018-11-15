@@ -18,7 +18,7 @@ import dev.sample.authentication.entities.News
 fun bindItems(recyclerView: RecyclerView, items: List<News>? = null) {
     if(items == null) return
 
-    (recyclerView.adapter as ContentAdapter).resetNews(items)
+    (recyclerView.adapter as ContentAdapter).addItems(items)
 }
 
 // TODO consider to use okhttp to load images

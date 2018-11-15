@@ -13,6 +13,7 @@ import dagger.android.support.DaggerFragment
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentContentBinding
 import dev.sample.authentication.entities.News
+import dev.sample.authentication.ui.PaginationOnScrollListener
 import javax.inject.Inject
 
 
@@ -30,8 +31,11 @@ class ContentFragment : DaggerFragment() {
     private lateinit var viewModel: ContentViewModel
     private lateinit var binding: FragmentContentBinding
     private lateinit var adapter: ContentAdapter
+    private lateinit var scrollListener: PaginationOnScrollListener
 
-    private var newsDataObserver: Observer<List<News>> = Observer { _ -> onNewsDataChange() }
+    private var newsDataObserver: Observer<List<News>> = Observer { newData ->
+        onNewsDataChange(newData.size)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,16 +73,33 @@ class ContentFragment : DaggerFragment() {
         adapter = ContentAdapter()
         binding.contentList.adapter = adapter
 
+        scrollListener = PaginationOnScrollListener {
+            adapter.pagingMode()
+
+            viewModel.newsNextPage()
+        }
+        binding.contentList.addOnScrollListener(scrollListener)
+
         binding.refresher.setOnRefreshListener {
-            if(adapter.isDataEmpty()) adapter.initialMode()
+            adapter.initialMode()
+
+            scrollListener.setLoadingNecessity(true)
 
             binding.viewModel?.refreshNewsData()
         }
     }
 
-    private fun onNewsDataChange() {
+    private fun onNewsDataChange(newDataSize: Int) {
         if(binding.refresher.isRefreshing) {
             binding.refresher.isRefreshing = false
+        }
+
+        if(newDataSize == 0) {
+            scrollListener.setLoadingNecessity(false)
+        }
+
+        if(scrollListener.isInProcess) {
+            scrollListener.finishPageLoading()
         }
     }
 

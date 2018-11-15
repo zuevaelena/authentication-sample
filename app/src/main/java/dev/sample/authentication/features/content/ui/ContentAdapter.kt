@@ -14,6 +14,8 @@ import java.lang.IllegalArgumentException
 
 class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
+        private const val FIRST_POSITION_INDEX = 0
+
         private const val INITIAL_ITEMS_COUNT = 1
         private const val EMPTY_ITEMS_COUNT = 1
 
@@ -23,42 +25,48 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val PAGING_ITEM = 4
     }
 
-    private var initialLoadInProcess: Boolean = true
+    private var initialLoadInProcess: Boolean = false
     private var pagingInProcess: Boolean = false
+    private lateinit var listNews: MutableList<News>
 
-    private var listNews: MutableList<News> = mutableListOf()
-
-    fun isDataEmpty() : Boolean = listNews.isEmpty()
+    init {
+        initialMode()
+    }
 
     fun initialMode() {
         initialLoadInProcess = true
-
+        pagingInProcess = false
         listNews = mutableListOf()
-        notifyDataSetChanged()
-    }
-
-    fun togglePaging(inProcess: Boolean) {
-        pagingInProcess = inProcess
 
         notifyDataSetChanged()
     }
 
-    fun resetNews(list: List<News>) {
-        if(initialLoadInProcess) initialLoadInProcess = false
+    fun pagingMode() {
+        pagingInProcess = true
 
-        listNews.apply {
-            clear()
-            addAll(list)
-        }
-        notifyDataSetChanged()
+        notifyItemInserted(itemCount - 1)
     }
 
     fun addItems(list: List<News>) {
-        if(initialLoadInProcess) initialLoadInProcess = false
-
-        val positionStart = itemCount - 1
         listNews.addAll(list)
-        notifyItemRangeInserted(positionStart, list.size)
+
+        if(initialLoadInProcess) {
+            initialLoadInProcess = false
+
+            notifyItemChanged(FIRST_POSITION_INDEX)
+            notifyItemRangeInserted(FIRST_POSITION_INDEX + 1, list.size-1)
+
+        } else if(pagingInProcess) {
+            val pagingPosition: Int = itemCount -1
+
+            pagingInProcess = false
+
+            notifyItemChanged(pagingPosition)
+            notifyItemRangeInserted(pagingPosition + 1, list.size-1)
+
+        } else {
+            notifyItemRangeInserted(itemCount - 1, list.size)
+        }
     }
 
     override fun getItemCount(): Int = when {
