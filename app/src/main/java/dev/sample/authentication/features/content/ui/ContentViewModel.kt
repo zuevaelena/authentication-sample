@@ -2,17 +2,14 @@ package dev.sample.authentication.features.content.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import dev.sample.authentication.DataLoadViewModel
 import dev.sample.authentication.entities.News
 import dev.sample.authentication.entities.User
 import dev.sample.authentication.features.content.usecases.FetchPage
 import dev.sample.authentication.usecases.FetchUser
 import dev.sample.authentication.usecases.ObserveAuthState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Data-handling business logic for Content screen.
@@ -20,7 +17,7 @@ import kotlin.coroutines.CoroutineContext
 class ContentViewModel @Inject constructor(
         private val fetchUser: FetchUser
         , private val fetchPage: FetchPage
-        , private val observeAuthState: ObserveAuthState) : ViewModel(), CoroutineScope {
+        , private val observeAuthState: ObserveAuthState) : DataLoadViewModel() {
 
     companion object {
         private const val FIRST_PAGE_NUMBER = 1
@@ -28,10 +25,6 @@ class ContentViewModel @Inject constructor(
     }
 
     private var currentPage: Int = FIRST_PAGE_NUMBER
-
-    private val contentLoadJob: Job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = contentLoadJob
 
     lateinit var userData: LiveData<User>
         private set
@@ -49,10 +42,9 @@ class ContentViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        observeAuthState.stop()
-        if (contentLoadJob.isActive) contentLoadJob.cancel()
-
         super.onCleared()
+
+        observeAuthState.stop()
     }
 
     private fun refreshUserData() {
