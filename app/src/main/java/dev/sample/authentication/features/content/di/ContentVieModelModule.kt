@@ -11,7 +11,7 @@ import dev.sample.authentication.data.UserRepository
 import dev.sample.authentication.data.remote.NewsApiRequestInterceptor
 import dev.sample.authentication.data.remote.NewsApiService
 import dev.sample.authentication.data.remote.RemoteNewsRepository
-import dev.sample.authentication.features.content.usecases.FetchNewsApiPage
+import dev.sample.authentication.features.content.usecases.DefaultFetchPage
 import dev.sample.authentication.features.content.usecases.FetchPage
 import dev.sample.authentication.usecases.DefaultFetchUser
 import dev.sample.authentication.usecases.FetchUser
@@ -56,6 +56,6 @@ class ContentViewModelModule {
     fun provideNewsRepository(remoteRepository: RemoteNewsRepository): NewsRepository = DefaultNewsRepository(remoteRepository)
 
     @Provides
-    fun providePageFetcher(newsRepository: NewsRepository): FetchPage = FetchNewsApiPage(newsRepository)
+    fun providePageFetcher(newsRepository: NewsRepository): FetchPage = DefaultFetchPage(newsRepository)
 
 }
