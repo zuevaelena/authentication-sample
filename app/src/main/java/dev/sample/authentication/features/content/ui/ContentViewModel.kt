@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ContentViewModel @Inject constructor(
         private val fetchUser: FetchUser
         , private val fetchPage: FetchPage
-        , observeAuthState: ObserveAuthState) : ViewModel() {
+        , private val observeAuthState: ObserveAuthState) : ViewModel() {
 
     companion object {
         private const val FIRST_PAGE_NUMBER = 1
@@ -36,6 +36,12 @@ class ContentViewModel @Inject constructor(
         refreshNewsData()
 
         observeAuthState.start { refreshUserData() }
+    }
+
+    override fun onCleared() {
+        observeAuthState.stop()
+
+        super.onCleared()
     }
 
     fun refreshUserData() {
