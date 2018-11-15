@@ -8,11 +8,11 @@ class NewsApiRequestInterceptor(val apiKey: String) : Interceptor {
         val request = chain.request()
 
         val url = request.url().newBuilder()
-                .addQueryParameter("apiKey", apiKey)
                 .addQueryParameter("category", "technology") //TODO implement settings screen
                 .build()
 
         val newRequest = request.newBuilder()
+                .addHeader("X-Api-Key", apiKey)
                 .url(url)
                 .build()
 

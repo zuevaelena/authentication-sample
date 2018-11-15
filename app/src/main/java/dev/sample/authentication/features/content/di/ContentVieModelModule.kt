@@ -34,7 +34,7 @@ class ContentViewModelModule {
 
     @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(NewsApiRequestInterceptor("38d07d37d36b4fc8bdc0a29a20a84428")) // TODO move it from here
+            .addInterceptor(NewsApiRequestInterceptor(BuildConfig.NEWS_API_KEY))
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })
@@ -46,7 +46,7 @@ class ContentViewModelModule {
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                     .create()))
-            .baseUrl("https://newsapi.org/v2/") // TODO move it from here
+            .baseUrl(BuildConfig.NEWS_API_BASE_URL)
             .build()
 
     @Provides
