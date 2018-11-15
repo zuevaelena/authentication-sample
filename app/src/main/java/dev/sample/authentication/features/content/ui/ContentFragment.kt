@@ -81,8 +81,7 @@ class ContentFragment : DaggerFragment() {
         binding.contentList.addOnScrollListener(scrollListener)
 
         binding.refresher.setOnRefreshListener {
-            // TODO do not show initial preloader on refresh
-            adapter.initialMode()
+            adapter.refreshMode()
 
             scrollListener.setLoadingNecessity(true)
 

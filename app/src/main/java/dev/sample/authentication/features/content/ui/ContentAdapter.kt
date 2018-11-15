@@ -33,12 +33,16 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         initialMode()
     }
 
-    fun initialMode() {
+    private fun initialMode() {
         initialLoadInProcess = true
         pagingInProcess = false
         listNews = mutableListOf()
 
         notifyDataSetChanged()
+    }
+
+    fun refreshMode() {
+        listNews = mutableListOf()
     }
 
     fun pagingMode() {
@@ -57,12 +61,16 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             notifyItemRangeInserted(FIRST_POSITION_INDEX + 1, list.size-1)
 
         } else if(pagingInProcess) {
-            val pagingPosition: Int = itemCount -1
+            val pagingPosition: Int = itemCount - 1
 
             pagingInProcess = false
 
             notifyItemChanged(pagingPosition)
             notifyItemRangeInserted(pagingPosition + 1, list.size-1)
+
+        // important to do so on refresh mode, since in refreshMode() data set change wasn't notified
+        } else if(listNews.size == list.size) {
+            notifyDataSetChanged()
 
         } else {
             notifyItemRangeInserted(itemCount - 1, list.size)
