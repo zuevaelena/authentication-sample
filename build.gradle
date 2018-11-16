@@ -8,7 +8,7 @@ buildscript {
         targetSdkVersion = 28
 
         // app dependencies
-        appcompatVersion = '1.0.1'
+        appcompatVersion = '1.0.2'
         constraintLayoutVersion = '1.1.3'
         daggerVersion = '2.16'
         firebaseCoreVersion = '16.0.5'

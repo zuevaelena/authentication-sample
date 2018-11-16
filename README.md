@@ -7,3 +7,4 @@ of the project is practicing Clean Architecture implementation and related tools
 - Dependency Injection principle via Dagger2
 - FirebaseAuthentication for user identification
 - BottomSheetDialogFragment as a menu
+- Reftrofit + kotlin.coroutines to handle network requests
