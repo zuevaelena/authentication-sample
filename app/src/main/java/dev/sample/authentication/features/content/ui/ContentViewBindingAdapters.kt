@@ -4,9 +4,9 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import dev.sample.authentication.R
 import dev.sample.authentication.entities.News
 
@@ -24,21 +24,12 @@ fun bindItems(recyclerView: RecyclerView, items: List<News>? = null) {
 // TODO consider to use okhttp to load images
 @BindingAdapter("imageUrl")
 fun loadImage(imageView: ImageView, uri: Uri?) {
-
-    // TODO implement better placeholder
-    val circularProgressDrawable = CircularProgressDrawable(imageView.context).apply {
-        setColorSchemeColors(R.color.primaryDarkColor)
-        strokeWidth = 5f
-        centerRadius = 32f
-        start()
-    }
-
     Glide.with(imageView.context)
             .setDefaultRequestOptions(RequestOptions().apply {
-                placeholder(circularProgressDrawable)
+                placeholder(R.drawable.ic_mock_photo)
                 error(R.drawable.ic_mock_photo)
-                centerCrop()
             })
             .load(uri ?: Uri.EMPTY)
+            .transition(withCrossFade(600))
             .into(imageView)
 }

@@ -40,6 +40,13 @@
         <item name="android:paddingBottom">@dimen/half_default_vertical_margin</item>
         <item name="android:paddingStart">@dimen/half_default_horizontal_margin</item>
     </style>
+    <style name="ContentList.Item.Land">
+        <item name="android:minHeight">210dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+    </style>
 
     <style name="ContentList.Title">
         <item name="android:textAppearance">?textAppearanceHeadline6</item>
@@ -52,12 +59,20 @@
         <item name="android:lines">3</item>
         <item name="android:ellipsize">end</item>
     </style>
+    <style name="ContentList.Description.Land">
+        <item name="android:lines">6</item>
+    </style>
 
     <style name="ContentList.Date">
         <item name="android:textAppearance">?textAppearanceCaption</item>
         <item name="android:paddingTop">@dimen/half_default_vertical_margin</item>
     </style>
 
-    <style name="ContentList.Photo" />
+    <style name="ContentList.Photo">
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+    <style name="ContentList.Photo.Land">
+        <item name="android:foreground">@drawable/fg_content_photo</item>
+    </style>
 
 </resources>
