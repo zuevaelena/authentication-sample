@@ -31,17 +31,30 @@
             app:layout_constraintWidth_percent="0.4" />
 
         <TextView
+            android:id="@+id/source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ContentList.SourceName"
+            android:text="@{newsItem.source.name}"
+            android:layout_marginTop="@dimen/half_default_vertical_margin"
+            android:layout_marginStart="@dimen/half_default_horizontal_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.63"
+            app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+        <TextView
             android:id="@+id/title"
             style="@style/ContentList.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/half_default_vertical_margin"
-            android:layout_marginStart="@dimen/half_default_horizontal_margin"
             android:text="@{newsItem.title}"
             app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/source"
+            app:layout_constraintTop_toBottomOf="@id/source"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintWidth_percent="0.63"
             app:layout_constraintVertical_chainStyle="spread_inside"/>
@@ -53,9 +66,11 @@
             style="@style/ContentList.Description.Land"
             android:text="@{newsItem.description}"
             app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/publish_date"
             app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.63"
             app:layout_constraintVertical_chainStyle="spread_inside"/>
 
         <TextView
@@ -66,9 +81,11 @@
             style="@style/ContentList.Date"
             android:text="@{newsItem.publishedAt.toString()}"
             app:layout_constraintTop_toBottomOf="@id/description"
-            app:layout_constraintEnd_toEndOf="@id/description"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/description"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintWidth_percent="0.63"
             app:layout_constraintVertical_chainStyle="spread_inside"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
