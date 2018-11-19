@@ -4,7 +4,7 @@ import android.net.Uri
 import java.util.Date
 
 data class News(
-        //val source: NewsSource, // TODO put news source data back
+        val source: NewsSource,
         val title: String,
         val description: String,
         val publishedAt: Date,
