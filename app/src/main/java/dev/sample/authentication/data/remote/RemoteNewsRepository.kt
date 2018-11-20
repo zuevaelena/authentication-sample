@@ -10,6 +10,7 @@ class RemoteNewsRepository @Inject constructor(private val retrofitService: News
 
     // TODO handle network connection error somewhere
     // TODO consider to handle network errors, that is all except with 20x response codes
+    // TODO implement dispatchers factory for do not define same dispatcher twice
     suspend fun getPage(page: Int, perPage: Int): List<News> {
         return CoroutineScope(Dispatchers.IO).async {
             retrofitService.getPage(page, perPage).execute().body()?.articles ?: emptyList()

@@ -12,8 +12,8 @@ open class DataLoadViewModel : ViewModel(), CoroutineScope {
         get() = loadingJob
 
     override fun onCleared() {
-        super.onCleared()
+        loadingJob.cancel()
 
-        if (loadingJob.isActive) loadingJob.cancel()
+        super.onCleared()
     }
 }
