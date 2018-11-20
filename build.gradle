@@ -25,6 +25,7 @@ buildscript {
         mockitoVersion = '2.8.9'
         mockitoKotlinVersion = '1.5.0'
         okhttpVersion = '3.11.0'
+        pagingVersion = '1.0.1'
         retrofitVersion = '2.4.0'
         retrofitGsonConverterVersion = '2.4.0'
     }
