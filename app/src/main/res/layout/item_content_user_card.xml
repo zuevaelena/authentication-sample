@@ -8,13 +8,13 @@
 
         <variable
             name="viewModel"
-            type="dev.sample.authentication.features.content.ui.ContentViewModel" />
+            type="dev.sample.authentication.presentation.screen.content.ui.ContentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.content.ui.ContentFragment">
+        tools:context=".presentation.screen.content.ui.ContentFragment">
 
         <TextView
             android:id="@+id/greeting"

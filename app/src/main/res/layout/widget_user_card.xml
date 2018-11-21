@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="dev.sample.authentication.features.bottommenu.ui.BottomMenuViewModel" />
+            type="dev.sample.authentication.presentation.screen.bottommenu.ui.BottomMenuViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

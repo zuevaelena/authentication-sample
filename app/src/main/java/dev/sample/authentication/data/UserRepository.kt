@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import dev.sample.authentication.entities.User
+import dev.sample.authentication.domain.model.User
 import javax.inject.Inject
 
 

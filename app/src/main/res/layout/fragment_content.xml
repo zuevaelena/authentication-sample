@@ -7,14 +7,14 @@
     <data>
         <variable
             name="viewModel"
-            type="dev.sample.authentication.features.content.ui.ContentViewModel" />
+            type="dev.sample.authentication.presentation.screen.content.ui.ContentViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.content.ui.ContentFragment">
+        tools:context=".presentation.screen.content.ui.ContentFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/content_list"

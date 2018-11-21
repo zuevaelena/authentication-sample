@@ -1,7 +1,7 @@
 package dev.sample.authentication.data
 
 import dev.sample.authentication.data.remote.RemoteNewsRepository
-import dev.sample.authentication.entities.News
+import dev.sample.authentication.domain.model.News
 import javax.inject.Inject
 
 interface NewsRepository {

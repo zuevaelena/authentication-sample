@@ -1,8 +1,8 @@
 package dev.sample.authentication
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.sample.authentication.entities.News
-import dev.sample.authentication.features.content.ui.ContentViewModel
+import dev.sample.authentication.domain.model.News
+import dev.sample.authentication.presentation.screen.content.ui.ContentViewModel
 import org.junit.Rule
 import org.junit.rules.TestRule
 import java.util.Date

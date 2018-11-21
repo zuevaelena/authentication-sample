@@ -6,7 +6,7 @@
     <data>
         <variable
             name="newsItem"
-            type="dev.sample.authentication.entities.News" />
+            type="dev.sample.authentication.domain.model.News" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,6 +1,6 @@
 package dev.sample.authentication.data.remote
 
-import dev.sample.authentication.entities.News
+import dev.sample.authentication.domain.model.News
 
 data class NewsPageResponse(
         val status: String
