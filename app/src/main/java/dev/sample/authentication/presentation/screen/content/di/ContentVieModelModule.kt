@@ -7,14 +7,11 @@ import dagger.Provides
 import dev.sample.authentication.BuildConfig
 import dev.sample.authentication.data.DefaultNewsRepository
 import dev.sample.authentication.data.NewsRepository
-import dev.sample.authentication.data.UserRepository
 import dev.sample.authentication.data.remote.NewsApiRequestInterceptor
 import dev.sample.authentication.data.remote.NewsApiService
 import dev.sample.authentication.data.remote.RemoteNewsRepository
-import dev.sample.authentication.presentation.screen.content.usecases.DefaultFetchPage
-import dev.sample.authentication.presentation.screen.content.usecases.FetchPage
-import dev.sample.authentication.domain.usecases.DefaultFetchUser
-import dev.sample.authentication.domain.usecases.FetchUser
+import dev.sample.authentication.domain.usecases.DefaultFetchNewsPage
+import dev.sample.authentication.domain.usecases.FetchNewsPage
 import dev.sample.authentication.domain.usecases.ObserveAuthState
 import dev.sample.authentication.domain.usecases.ObserveFirebaseAuthState
 import okhttp3.OkHttpClient
@@ -25,9 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module(includes = [ContentFragmentModule::class])
 class ContentViewModelModule {
-
-    @Provides
-    fun provideUserFetcher(userRepository: UserRepository): FetchUser = DefaultFetchUser(userRepository)
 
     @Provides
     fun provideAuthStateObserver(firebaseAuth: FirebaseAuth): ObserveAuthState = ObserveFirebaseAuthState(firebaseAuth)
@@ -56,6 +50,6 @@ class ContentViewModelModule {
     fun provideNewsRepository(remoteRepository: RemoteNewsRepository): NewsRepository = DefaultNewsRepository(remoteRepository)
 
     @Provides
-    fun providePageFetcher(newsRepository: NewsRepository): FetchPage = DefaultFetchPage(newsRepository)
+    fun providePageFetcher(newsRepository: NewsRepository): FetchNewsPage = DefaultFetchNewsPage(newsRepository)
 
 }

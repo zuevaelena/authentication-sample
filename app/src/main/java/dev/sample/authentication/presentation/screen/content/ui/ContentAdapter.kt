@@ -33,7 +33,7 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         initialMode()
     }
 
-    private fun initialMode() {
+    fun initialMode() {
         initialLoadInProcess = true
         pagingInProcess = false
         listNews = mutableListOf()
@@ -138,6 +138,7 @@ class ContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun attachData(item: News) {
             binding.newsItem = item
+            binding.executePendingBindings()
         }
     }
 

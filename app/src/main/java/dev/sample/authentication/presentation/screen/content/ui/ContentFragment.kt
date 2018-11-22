@@ -13,6 +13,7 @@ import dagger.android.support.DaggerFragment
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentContentBinding
 import dev.sample.authentication.domain.model.News
+import dev.sample.authentication.domain.model.User
 import dev.sample.authentication.presentation.customview.PaginationOnScrollListener
 import javax.inject.Inject
 
@@ -37,6 +38,10 @@ class ContentFragment : DaggerFragment() {
         onNewsDataChange(newData.size)
     }
 
+    private var authStateObserver: Observer<User> = Observer {
+        onAuthStateChange()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +54,7 @@ class ContentFragment : DaggerFragment() {
         setupDataBinding(inflater, container)
         setupContentList()
 
+        viewModel.userData.observe(this, authStateObserver)
         viewModel.newsData.observe(this, newsDataObserver)
 
         return binding.root
@@ -90,17 +96,22 @@ class ContentFragment : DaggerFragment() {
     }
 
     private fun onNewsDataChange(newDataSize: Int) {
-        if(binding.refresher.isRefreshing) {
+        if (binding.refresher.isRefreshing) {
             binding.refresher.isRefreshing = false
         }
 
-        if(newDataSize == 0) {
+        if (newDataSize == 0) {
             scrollListener.setLoadingNecessity(false)
         }
 
-        if(scrollListener.isInProcess) {
+        if (scrollListener.isInProcess) {
             scrollListener.finishPageLoading()
         }
+    }
+
+    private fun onAuthStateChange() {
+        adapter.initialMode()
+        viewModel.refreshNewsData()
     }
 
 }

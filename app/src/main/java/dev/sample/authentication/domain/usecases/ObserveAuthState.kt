@@ -15,7 +15,9 @@ class ObserveFirebaseAuthState @Inject constructor(private val firebaseAuth: Fir
     private lateinit var listener: FirebaseAuth.AuthStateListener
 
     override fun start(onChangeComplete: () -> Unit) {
-        listener = FirebaseAuth.AuthStateListener { onChangeComplete() }
+        listener = FirebaseAuth.AuthStateListener {
+            onChangeComplete()
+        }
 
         firebaseAuth.addAuthStateListener(listener)
     }

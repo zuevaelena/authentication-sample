@@ -1,10 +1,10 @@
 package dev.sample.authentication.fakeobjects
 
 import android.content.Intent
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignIn
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInError
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInFailure
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInResult
+import dev.sample.authentication.domain.usecases.SignIn
+import dev.sample.authentication.domain.usecases.SignInError
+import dev.sample.authentication.domain.usecases.SignInFailure
+import dev.sample.authentication.domain.usecases.SignInResult
 import org.mockito.Mockito
 
 class FakeFailedSignIn : SignIn {

@@ -4,15 +4,13 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
-import dev.sample.authentication.data.UserRepository
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.FirebaseSignIn
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.FirebaseSignOut
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignIn
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOut
-import dev.sample.authentication.domain.usecases.DefaultFetchUser
 import dev.sample.authentication.domain.usecases.FetchUser
+import dev.sample.authentication.domain.usecases.FirebaseSignIn
+import dev.sample.authentication.domain.usecases.FirebaseSignOut
 import dev.sample.authentication.domain.usecases.ObserveAuthState
 import dev.sample.authentication.domain.usecases.ObserveFirebaseAuthState
+import dev.sample.authentication.domain.usecases.SignIn
+import dev.sample.authentication.domain.usecases.SignOut
 
 @Module
 class BottomMenuViewModelModule {
@@ -21,13 +19,10 @@ class BottomMenuViewModelModule {
     fun provideFirebaseAuthUi(): AuthUI = AuthUI.getInstance()
 
     @Provides
-    fun provideSignIn(authUi: AuthUI): SignIn = FirebaseSignIn(authUi)
+    fun provideSignIn(authUi: AuthUI, fetchUser: FetchUser): SignIn = FirebaseSignIn(authUi, fetchUser)
 
     @Provides
-    fun provideSignOut(authUi: AuthUI): SignOut = FirebaseSignOut(authUi)
-
-    @Provides
-    fun provideUserFetcher(userRepository: UserRepository): FetchUser = DefaultFetchUser(userRepository)
+    fun provideSignOut(authUi: AuthUI, fetchUser: FetchUser): SignOut = FirebaseSignOut(authUi, fetchUser)
 
     @Provides
     fun provideAuthStateObserver(firebaseAuth: FirebaseAuth): ObserveAuthState = ObserveFirebaseAuthState(firebaseAuth)

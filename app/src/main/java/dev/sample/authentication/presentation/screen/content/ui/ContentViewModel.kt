@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import dev.sample.authentication.presentation.DataLoadViewModel
 import dev.sample.authentication.domain.model.News
 import dev.sample.authentication.domain.model.User
-import dev.sample.authentication.presentation.screen.content.usecases.FetchPage
+import dev.sample.authentication.domain.usecases.FetchNewsPage
 import dev.sample.authentication.domain.usecases.FetchUser
 import dev.sample.authentication.domain.usecases.ObserveAuthState
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(
         private val fetchUser: FetchUser
-        , private val fetchPage: FetchPage
+        , private val fetchNewsPage: FetchNewsPage
         , private val observeAuthState: ObserveAuthState) : DataLoadViewModel() {
 
     companion object {
@@ -26,8 +26,9 @@ class ContentViewModel @Inject constructor(
 
     private var currentPage: Int = FIRST_PAGE_NUMBER
 
-    lateinit var userData: LiveData<User>
-        private set
+    private val _userData: MutableLiveData<User> = MutableLiveData()
+    val userData: LiveData<User>
+        get() = _userData
 
     private val _newsData: MutableLiveData<List<News>> = MutableLiveData()
     val newsData: LiveData<List<News>>
@@ -35,10 +36,10 @@ class ContentViewModel @Inject constructor(
 
 
     init {
-        refreshUserData()
+        getUserData()
         refreshNewsData()
 
-        observeAuthState.start { refreshUserData() }
+        observeAuthState.start { getUserData() }
     }
 
     override fun onCleared() {
@@ -47,8 +48,8 @@ class ContentViewModel @Inject constructor(
         observeAuthState.stop()
     }
 
-    private fun refreshUserData() {
-        userData = fetchUser.execute()
+    private fun getUserData() {
+        _userData.postValue(fetchUser.execute())
     }
 
     fun refreshNewsData() {
@@ -63,7 +64,7 @@ class ContentViewModel @Inject constructor(
 
     private fun loadCurrentPageNewsData() {
         launch {
-            _newsData.postValue(fetchPage.execute(currentPage, ITEMS_PER_PAGE))
+            _newsData.postValue(fetchNewsPage.execute(currentPage, ITEMS_PER_PAGE))
         }
 
     }

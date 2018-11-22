@@ -10,12 +10,12 @@ import dev.sample.authentication.fakeobjects.FakeFetchSignedOutUser
 import dev.sample.authentication.fakeobjects.FakeSuccessSignIn
 import dev.sample.authentication.fakeobjects.FakeSuccessSignOut
 import dev.sample.authentication.presentation.screen.bottommenu.ui.BottomMenuViewModel
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignIn
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOut
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInFailure
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInSuccess
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOutError
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOutSuccess
+import dev.sample.authentication.domain.usecases.SignIn
+import dev.sample.authentication.domain.usecases.SignOut
+import dev.sample.authentication.domain.usecases.SignInFailure
+import dev.sample.authentication.domain.usecases.SignInSuccess
+import dev.sample.authentication.domain.usecases.SignOutError
+import dev.sample.authentication.domain.usecases.SignOutSuccess
 import dev.sample.authentication.domain.usecases.FetchUser
 import dev.sample.authentication.domain.usecases.ObserveAuthState
 import org.hamcrest.MatcherAssert
@@ -109,7 +109,7 @@ class BottomMenuViewModelTest {
 
         viewModel.signOut(mockContext)
 
-        val signOutData = viewModel.signoutData
+        val signOutData = viewModel.signOutData
         MatcherAssert.assertThat(signOutData.value is SignOutSuccess, Matchers.`is`(true))
     }
 
@@ -119,7 +119,7 @@ class BottomMenuViewModelTest {
 
         viewModel.signOut(mockContext)
 
-        val signOutData = viewModel.signoutData
+        val signOutData = viewModel.signOutData
         MatcherAssert.assertThat(signOutData.value is SignOutError, Matchers.`is`(true))
     }
 }

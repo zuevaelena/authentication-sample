@@ -14,10 +14,10 @@ import androidx.lifecycle.ViewModelProviders
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentBottomSheetMenuBinding
 import dev.sample.authentication.databinding.WidgetUserCardBinding
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInError
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInFailure
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOutError
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOutResult
+import dev.sample.authentication.domain.usecases.SignInError
+import dev.sample.authentication.domain.usecases.SignInFailure
+import dev.sample.authentication.domain.usecases.SignOutError
+import dev.sample.authentication.domain.usecases.SignOutResult
 import dev.sample.authentication.presentation.customview.DaggerBottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -47,7 +47,7 @@ class BottomMenuFragment : DaggerBottomSheetDialogFragment() {
         menuBinding.setLifecycleOwner(this)
 
         headerViewModel = ViewModelProviders.of(this, viewModelFactory).get(BottomMenuViewModel::class.java)
-        headerViewModel.signoutData.observe(this, signOutObserver)
+        headerViewModel.signOutData.observe(this, signOutObserver)
 
         headerBinding = DataBindingUtil.inflate(inflater
                 , R.layout.widget_user_card

@@ -3,14 +3,16 @@ package dev.sample.authentication.presentation.screen.bottommenu.ui
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import dev.sample.authentication.domain.model.User
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignIn
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignInResult
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOut
-import dev.sample.authentication.presentation.screen.bottommenu.usecase.SignOutResult
 import dev.sample.authentication.domain.usecases.FetchUser
 import dev.sample.authentication.domain.usecases.ObserveAuthState
+import dev.sample.authentication.domain.usecases.SignIn
+import dev.sample.authentication.domain.usecases.SignInResult
+import dev.sample.authentication.domain.usecases.SignOut
+import dev.sample.authentication.domain.usecases.SignOutResult
 import javax.inject.Inject
 
 class BottomMenuViewModel @Inject constructor(
@@ -19,20 +21,32 @@ class BottomMenuViewModel @Inject constructor(
         , private val fetchUser: FetchUser
         , private val observeAuthState: ObserveAuthState) : ViewModel() {
 
-    private val onAuthStateAction = { userData = fetchUser.execute() }
+    private val onAuthStateAction = { getUserData() }
 
-    var userData: LiveData<User>
-        private set
+    private val _userData: MutableLiveData<User> = MutableLiveData()
+    val userData: LiveData<User>
+        get() = _userData
 
-    var signoutData: LiveData<SignOutResult>
-        private set
+    private val _signOutData: MutableLiveData<SignOutResult> = MutableLiveData()
+    val signOutData: LiveData<SignOutResult>
+        get() = _signOutData
+
+    private var signOutObserver: Observer<SignOutResult> = Observer { result -> processSignOutResult(result) }
 
     init {
-        userData = fetchUser.execute()
+        getUserData()
 
-        signoutData = signOut.getResult()
+        signOut.getResult().observeForever(signOutObserver)
 
         observeAuthState.start(onAuthStateAction)
+    }
+
+    override fun onCleared() {
+        _signOutData.removeObserver(signOutObserver)
+
+        observeAuthState.stop()
+
+        super.onCleared()
     }
 
     fun getSignInIntent(): Intent {
@@ -62,6 +76,19 @@ class BottomMenuViewModel @Inject constructor(
         if (userData.value?.isLoggedIn() == false) {
             throw IllegalAccessException("Cannot log out when logged out already")
         }
+
+        observeAuthState.stop()
+
         signOut.trigger(context)
+    }
+
+    private fun processSignOutResult(signOutResult: SignOutResult) {
+        _signOutData.postValue(signOutResult)
+
+        observeAuthState.start(onAuthStateAction)
+    }
+
+    private fun getUserData() {
+        _userData.postValue(fetchUser.execute())
     }
 }
