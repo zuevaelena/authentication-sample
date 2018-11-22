@@ -8,7 +8,7 @@ import dev.sample.authentication.domain.model.User
 import org.mockito.Mockito
 
 class FakeFetchSignedOutUser : FetchUser {
-    override fun execute(): LiveData<User> = MutableLiveData<User>().apply {
-        value = User(User.getAnonymousId(), User.getAnonymousName(), Mockito.mock(Uri::class.java))
+    override fun execute(forceRefresh: Boolean): User {
+        return User(User.getAnonymousId(), User.getAnonymousName(), Mockito.mock(Uri::class.java))
     }
 }

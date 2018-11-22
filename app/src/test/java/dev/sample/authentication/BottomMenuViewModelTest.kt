@@ -42,7 +42,6 @@ class BottomMenuViewModelTest {
     private val fakeFailureSignOut: FakeFailedSignOut = FakeFailedSignOut()
 
     private val mockSignIn: SignIn = Mockito.mock(SignIn::class.java)
-    private val mockSignOut: SignOut = Mockito.mock(SignOut::class.java)
 
     private val mockObserveAuthState: ObserveAuthState = Mockito.mock(ObserveAuthState::class.java)
 
@@ -54,7 +53,7 @@ class BottomMenuViewModelTest {
 
     @Test
     fun whenLoggedOut_gettingLogInIntent_success() {
-        viewModel = BottomMenuViewModel(fakeSuccessSignIn, mockSignOut, fakeSignedOutUser, mockObserveAuthState)
+        viewModel = BottomMenuViewModel(fakeSuccessSignIn, fakeSuccessSignOut, fakeSignedOutUser, mockObserveAuthState)
 
         MatcherAssert.assertThat(viewModel.getSignInIntent() is Intent, Matchers.`is`(true))
     }
@@ -74,7 +73,7 @@ class BottomMenuViewModelTest {
 
     @Test
     fun whenLoggedOut_successfullyLogIn_returnSuccessResult() {
-        viewModel = BottomMenuViewModel(fakeSuccessSignIn, mockSignOut, fakeSignedOutUser, mockObserveAuthState)
+        viewModel = BottomMenuViewModel(fakeSuccessSignIn, fakeSuccessSignOut, fakeSignedOutUser, mockObserveAuthState)
 
         val signInResult = viewModel.getSignInResult(0, mockIntent)
 
@@ -83,7 +82,7 @@ class BottomMenuViewModelTest {
 
     @Test
     fun whenDoingLogIn_gettingError_returnErrorResult() {
-        viewModel = BottomMenuViewModel(fakeFailedSignIn, mockSignOut, fakeSignedOutUser, mockObserveAuthState)
+        viewModel = BottomMenuViewModel(fakeFailedSignIn, fakeSuccessSignOut, fakeSignedOutUser, mockObserveAuthState)
 
         val signInResult = viewModel.getSignInResult(0, mockIntent)
 
@@ -92,7 +91,7 @@ class BottomMenuViewModelTest {
 
     @Test
     fun whenLoggedIn_gettingLogInIntent_exception() {
-        viewModel = BottomMenuViewModel(fakeSuccessSignIn, mockSignOut, fakeSignedInUser, mockObserveAuthState)
+        viewModel = BottomMenuViewModel(fakeSuccessSignIn, fakeSuccessSignOut, fakeSignedInUser, mockObserveAuthState)
 
         try {
             viewModel.getSignInIntent()
