@@ -3,6 +3,7 @@ package dev.sample.authentication.presentation.screen.content.ui
 import android.net.Uri
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -15,10 +16,10 @@ import dev.sample.authentication.domain.model.News
  * This is the place where [ContentAdapter] getting it's items.
  */
 @BindingAdapter("items", requireAll = false)
-fun bindItems(recyclerView: RecyclerView, items: List<News>? = null) {
+fun bindItems(recyclerView: RecyclerView, items: PagedList<News>? = null) {
     if(items == null) return
 
-    (recyclerView.adapter as ContentAdapter).addItems(items)
+    (recyclerView.adapter as NewsPagedListAdapter).submitList(items)
 }
 
 // TODO consider to use okhttp to load images

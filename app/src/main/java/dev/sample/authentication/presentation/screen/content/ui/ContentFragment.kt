@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.DaggerFragment
 import dev.sample.authentication.R
 import dev.sample.authentication.databinding.FragmentContentBinding
-import dev.sample.authentication.domain.model.News
 import dev.sample.authentication.domain.model.User
-import dev.sample.authentication.presentation.customview.PaginationOnScrollListener
 import javax.inject.Inject
 
 
@@ -31,12 +29,7 @@ class ContentFragment : DaggerFragment() {
 
     private lateinit var viewModel: ContentViewModel
     private lateinit var binding: FragmentContentBinding
-    private lateinit var adapter: ContentAdapter
-    private lateinit var scrollListener: PaginationOnScrollListener
-
-    private var newsDataObserver: Observer<List<News>> = Observer { newData ->
-        onNewsDataChange(newData.size)
-    }
+    private lateinit var adapter: NewsPagedListAdapter
 
     private var authStateObserver: Observer<User> = Observer {
         onAuthStateChange()
@@ -55,13 +48,12 @@ class ContentFragment : DaggerFragment() {
         setupContentList()
 
         viewModel.userData.observe(this, authStateObserver)
-        viewModel.newsData.observe(this, newsDataObserver)
 
         return binding.root
     }
 
     override fun onDestroyView() {
-        viewModel.newsData.removeObserver(newsDataObserver)
+        viewModel.userData.removeObserver(authStateObserver)
 
         super.onDestroyView()
     }
@@ -76,42 +68,27 @@ class ContentFragment : DaggerFragment() {
     private fun setupContentList() {
         binding.contentList.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = ContentAdapter()
+        adapter = NewsPagedListAdapter()
         binding.contentList.adapter = adapter
 
-        scrollListener = PaginationOnScrollListener {
-            adapter.pagingMode()
+        // TODO setup initial preloader
+        // TODO setup page loading indicator
 
-            viewModel.newsNextPage()
-        }
-        binding.contentList.addOnScrollListener(scrollListener)
-
+        // TODO setup page refresher
         binding.refresher.setOnRefreshListener {
-            adapter.refreshMode()
-
-            scrollListener.setLoadingNecessity(true)
-
-            binding.viewModel?.refreshNewsData()
         }
     }
 
-    private fun onNewsDataChange(newDataSize: Int) {
+    // TODO consider to use it again
+    private fun onNewsDataChange() {
         if (binding.refresher.isRefreshing) {
             binding.refresher.isRefreshing = false
         }
 
-        if (newDataSize == 0) {
-            scrollListener.setLoadingNecessity(false)
-        }
-
-        if (scrollListener.isInProcess) {
-            scrollListener.finishPageLoading()
-        }
     }
 
     private fun onAuthStateChange() {
-        adapter.initialMode()
-        viewModel.refreshNewsData()
+        // TODO retake all data on auth change
     }
 
 }

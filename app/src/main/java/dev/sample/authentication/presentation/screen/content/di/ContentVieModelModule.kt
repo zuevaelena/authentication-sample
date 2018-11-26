@@ -10,8 +10,8 @@ import dev.sample.authentication.data.NewsRepository
 import dev.sample.authentication.data.remote.NewsApiRequestInterceptor
 import dev.sample.authentication.data.remote.NewsApiService
 import dev.sample.authentication.data.remote.RemoteNewsRepository
-import dev.sample.authentication.domain.usecases.DefaultFetchNewsPage
-import dev.sample.authentication.domain.usecases.FetchNewsPage
+import dev.sample.authentication.domain.usecases.DefaultFetchNews
+import dev.sample.authentication.domain.usecases.FetchNews
 import dev.sample.authentication.domain.usecases.ObserveAuthState
 import dev.sample.authentication.domain.usecases.ObserveFirebaseAuthState
 import okhttp3.OkHttpClient
@@ -50,6 +50,6 @@ class ContentViewModelModule {
     fun provideNewsRepository(remoteRepository: RemoteNewsRepository): NewsRepository = DefaultNewsRepository(remoteRepository)
 
     @Provides
-    fun providePageFetcher(newsRepository: NewsRepository): FetchNewsPage = DefaultFetchNewsPage(newsRepository)
+    fun provideNewsFetcher(newsRepository: NewsRepository): FetchNews = DefaultFetchNews(newsRepository)
 
 }
