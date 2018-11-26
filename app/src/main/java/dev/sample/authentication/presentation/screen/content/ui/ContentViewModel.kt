@@ -18,11 +18,11 @@ import javax.inject.Inject
  */
 class ContentViewModel @Inject constructor(
         private val fetchUser: FetchUser
-        , fetchNews: FetchNews
+        , private val fetchNews: FetchNews
         , private val observeAuthState: ObserveAuthState) : DataLoadViewModel() {
 
     companion object {
-        private const val ITEMS_PER_PAGE = 25
+        private const val ITEMS_PER_PAGE = 10
 
         private val pagedListConfig = PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -37,11 +37,12 @@ class ContentViewModel @Inject constructor(
     val newsData: LiveData<PagedList<News>>
 
 
+
     init {
         getUserData()
         observeAuthState.start { getUserData() }
 
-        newsData = LivePagedListBuilder(fetchNews.execute(this, ITEMS_PER_PAGE), pagedListConfig)
+        newsData = LivePagedListBuilder(fetchNews.execute(this), pagedListConfig)
                 .build()
     }
 
@@ -49,6 +50,10 @@ class ContentViewModel @Inject constructor(
         super.onCleared()
 
         observeAuthState.stop()
+    }
+
+    fun refreshNewsData() {
+        newsData.value?.dataSource?.invalidate()
     }
 
     private fun getUserData() {

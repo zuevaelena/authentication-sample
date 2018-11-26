@@ -8,12 +8,12 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
 interface FetchNews {
-    fun execute(coroutineScope: CoroutineScope, perPage: Int): DataSource.Factory<Int, News>
+    fun execute(coroutineScope: CoroutineScope): DataSource.Factory<Int, News>
 }
 
 class DefaultFetchNews @Inject constructor(private val newsRepository: NewsRepository) : FetchNews {
 
-    override fun execute(coroutineScope: CoroutineScope, perPage: Int): DataSource.Factory<Int, News> {
+    override fun execute(coroutineScope: CoroutineScope): DataSource.Factory<Int, News> {
         return ContentListDataSourceFactory(coroutineScope, newsRepository)
     }
 
