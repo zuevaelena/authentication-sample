@@ -2,6 +2,10 @@ package dev.sample.authentication.presentation.screen.content.ui
 
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.text.PrecomputedTextCompat
+import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
@@ -33,4 +37,19 @@ fun loadImage(imageView: ImageView, uri: Uri?) {
             .load(uri ?: Uri.EMPTY)
             .transition(withCrossFade(600))
             .into(imageView)
+}
+
+/**
+ * This is for text rendering optimization. Took from here:
+ * https://medium.com/androiddevelopers/prefetch-text-layout-in-recyclerview-4acf9103f438
+ */
+@BindingAdapter("app:asyncText", "android:textSize", requireAll = false)
+fun asyncText(view: TextView, text: CharSequence?, textSize: Int?) {
+    if (textSize != null) {
+        // interpret the text size as SP
+        view.textSize = textSize.toFloat()
+    }
+    val params = TextViewCompat.getTextMetricsParams(view)
+    (view as AppCompatTextView).setTextFuture(
+            PrecomputedTextCompat.getTextFuture(text ?: "", params, null))
 }
