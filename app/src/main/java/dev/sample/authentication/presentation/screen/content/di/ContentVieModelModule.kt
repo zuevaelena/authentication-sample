@@ -28,7 +28,7 @@ class ContentViewModelModule {
 
     @Provides
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(NewsApiRequestInterceptor(BuildConfig.NEWS_API_KEY))
+            //.addInterceptor(NewsApiRequestInterceptor(BuildConfig.NEWS_API_KEY))
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
             })

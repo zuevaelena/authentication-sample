@@ -11,7 +11,12 @@ interface FetchNewsPage {
 class DefaultFetchNewsPage @Inject constructor(private val newsRepository: NewsRepository) : FetchNewsPage {
 
     override suspend fun execute(page: Int, perPage: Int): List<News> {
-        return newsRepository.getPage(page, perPage)
+        try {
+            return newsRepository.getPage(page, perPage)
+
+        } catch (e: Exception) {
+            return emptyList()
+        }
     }
 
 }

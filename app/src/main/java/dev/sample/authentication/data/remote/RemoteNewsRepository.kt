@@ -13,7 +13,8 @@ class RemoteNewsRepository @Inject constructor(private val retrofitService: News
     // TODO implement dispatchers factory for do not define same dispatcher twice
     suspend fun getPage(page: Int, perPage: Int): List<News> {
         return CoroutineScope(Dispatchers.IO).async {
-            retrofitService.getPage(page, perPage).execute().body()?.articles ?: emptyList()
+            val response = retrofitService.getPage(page, perPage).execute()
+            response.body()?.articles ?: emptyList()
         }.await()
     }
 
